@@ -7,7 +7,7 @@ from datetime import datetime
 import config
 
 
-def create_run(trigger, season_id, current_week, predictions, standings, seeds, bracket, elo_ratings=None, team_ratings=None):
+def create_run(trigger, season_id, current_week, predictions, standings, seeds, bracket, elo_ratings=None, team_ratings=None, power_rankings=None):
     return {
         "id": datetime.now().strftime("%Y%m%d%H%M%S%f"),
         "timestamp": datetime.now().isoformat(),
@@ -20,6 +20,7 @@ def create_run(trigger, season_id, current_week, predictions, standings, seeds, 
         "bracket": bracket,
         "elo_ratings": elo_ratings or {},
         "team_ratings": team_ratings or {},
+        "power_rankings": power_rankings or [],
     }
 
 
@@ -78,6 +79,21 @@ if __name__ == "__main__":
         except:
             team_ratings_snapshot[tid] = None
 
+    power_rankings = []
+    sorted_teams = sorted(
+        team_ratings_snapshot.items(),
+        key=lambda x: (-(x[1] or 0), -elo_ratings.get(x[0], 0))
+    )
+    for rank, (tid, rating) in enumerate(sorted_teams, 1):
+        power_rankings.append({
+            "rank": rank,
+            "team_id": tid,
+            "rating": rating,
+            "elo": round(elo_ratings.get(tid, 0), 1),
+            "projected_w": standings[tid]["w"],
+            "projected_l": standings[tid]["l"],
+        })
+
     run = create_run(
         trigger="Initial S8 prediction",
         season_id=8,
@@ -87,7 +103,8 @@ if __name__ == "__main__":
         seeds=seeds,
         bracket=bracket,
         elo_ratings={k: round(v, 1) for k, v in elo_ratings.items()},
-        team_ratings=team_ratings_snapshot
+        team_ratings=team_ratings_snapshot,
+        power_rankings=power_rankings
     )
 
     save_run(run)
