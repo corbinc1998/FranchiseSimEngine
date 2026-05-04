@@ -89,6 +89,22 @@ def run(trigger, season_id, current_week):
         except:
             team_ratings_snapshot[tid] = None
 
+    
+    power_rankings = []
+    sorted_teams = sorted(
+        team_ratings_snapshot.items(),
+        key=lambda x: (-(x[1] or 0), -elo_ratings.get(x[0], 0))
+    )
+    for rank, (tid, rating) in enumerate(sorted_teams, 1):
+        power_rankings.append({
+            "rank": rank,
+            "team_id": tid,
+            "rating": rating,
+            "elo": round(elo_ratings.get(tid, 0), 1),
+            "projected_w": standings[tid]["w"],
+            "projected_l": standings[tid]["l"],
+        })
+
     # Step 7 — Diff against previous run
     previous_run = get_latest_run()
     new_run = create_run(
@@ -100,7 +116,8 @@ def run(trigger, season_id, current_week):
         seeds=seeds,
         bracket=bracket,
         elo_ratings={k: round(v, 1) for k, v in elo_ratings.items()},
-        team_ratings=team_ratings_snapshot
+        team_ratings=team_ratings_snapshot,
+        power_rankings=power_rankings
     )
 
     sorted_ratings = sorted(team_ratings_snapshot.items(), key=lambda x: -x[1] if x[1] else 0)
