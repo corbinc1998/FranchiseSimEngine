@@ -88,36 +88,45 @@ Built specifically for Madden 10's playoff structure — 6 teams per conference,
 ---
 
 ## Project Structure
+```
 TheSimLeaguePredictionModel/
 ├── data/
 │   ├── raw/
-│   │   ├── games.json              # all seasons S1-S8, exported from web app
-│   │   └── team_stats/             # 32 team JSON files with season-by-season stats
+│   │   ├── games.json
+│   │   └── team_stats/
+│   │       ├── bears_report.json
+│   │       └── ... (32 team files)
 │   └── processed/
-│       └── predictions_log.json    # full prediction run history
+│       └── predictions_log.json
 ├── notebooks/
-│   └── elo_progression.py          # Elo bar charts, heatmap, and all-time stats
+│   └── elo_progression.py
 ├── src/
 │   ├── data/
-│   │   └── loader.py               # game and team stat loaders
+│   │   ├── __init__.py
+│   │   └── loader.py
 │   ├── features/
-│   │   ├── splits.py               # home/away splits
-│   │   ├── h2h.py                  # head-to-head history
-│   │   ├── rolling.py              # rolling and season stats
-│   │   ├── playoff.py              # playoff record and clutch factor
-│   │   ├── elo.py                  # Elo rating computation
-│   │   └── ratings.py              # team rating and matchup feature builder
+│   │   ├── __init__.py
+│   │   ├── splits.py
+│   │   ├── h2h.py
+│   │   ├── rolling.py
+│   │   ├── playoff.py
+│   │   ├── elo.py
+│   │   └── ratings.py
 │   ├── model/
-│   │   └── predict.py              # win probability and score prediction
+│   │   ├── __init__.py
+│   │   └── predict.py
 │   ├── simulation/
-│   │   ├── season.py               # full season prediction
-│   │   ├── standings.py            # standings, division rankings, playoff seeds
-│   │   └── bracket.py              # playoff bracket simulation
+│   │   ├── __init__.py
+│   │   ├── season.py
+│   │   ├── standings.py
+│   │   └── bracket.py
 │   └── tracking/
-│       ├── logger.py               # prediction run logger
-│       └── diff.py                 # run-to-run diff engine
-├── pipeline.py                     # CLI entry point
-└── config.py                       # weights, decay rates, Elo constants, file paths
+│       ├── __init__.py
+│       ├── logger.py
+│       └── diff.py
+├── pipeline.py
+└── config.py
+```
 
 ---
 
