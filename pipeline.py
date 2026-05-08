@@ -68,7 +68,12 @@ def run(trigger, season_id, current_week):
     print("\nBuilding standings...")
     standings = build_standings(results)
     seeds = get_playoff_seeds(standings, games)
-
+    # Override with actual S8 playoff seeds
+    if season_id == 8 and current_week >= 18:
+        seeds = {
+        "AFC": ["sd", "pit", "buf", "jax", "bal", "kc"],
+        "NFC": ["phi", "car", "chi", "sf", "tb", "atl"]
+        }
     # Step 5 — Simulate bracket
     print("Simulating playoff bracket...")
     bracket = simulate_bracket(seeds, games, team_stats_map, season_id=season_id, elo_ratings=elo_ratings)
