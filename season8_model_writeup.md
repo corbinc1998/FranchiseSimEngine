@@ -185,6 +185,90 @@ The 49ers held the projection for 9 consecutive weeks before Week 10 results shi
 
 ---
 
+## Playoff Results and Prediction Accuracy
+
+### Wildcard Round
+
+| Matchup | Model | Actual | Correct |
+|---------|-------|--------|---------|
+| KC @ BUF | BUF (66%) | KC won | No |
+| BAL @ JAX | BAL (55%) | BAL won | Yes |
+| ATL @ CHI | CHI (72%) | CHI won | Yes |
+| TB @ SF | SF (79%) | SF won | Yes |
+
+**Wildcard accuracy: 3/4 (75%)**
+
+The only miss was KC @ BUF, where the model favored the Bills as a 3 seed hosting a 6 seed. KC won outright to advance.
+
+---
+
+### Divisional Round
+
+| Matchup | Model | Actual | Correct |
+|---------|-------|--------|---------|
+| KC @ SD | SD | SD 35-28 | Yes |
+| BAL @ PIT | BAL | BAL 52-30 | Yes |
+| SF @ PHI | SF | SF 30-19 | Yes |
+| CHI @ CAR | CHI | CHI 35-13 | Yes |
+
+**Divisional accuracy: 4/4 (100%)**
+
+The model called every divisional game correctly. BAL's 52-30 demolition of PIT was the most surprising result — the Steelers had been the model's Super Bowl pick for most of the second half of the season.
+
+---
+
+### Conference Championships
+
+| Matchup | Model | Actual | Correct |
+|---------|-------|--------|---------|
+| BAL @ SD | BAL | BAL 28-24 | Yes |
+| SF @ CHI | SF | SF 33-6 | Yes |
+
+**Conference accuracy: 2/2 (100%)**
+
+CHI's 33-6 loss ended a strong postseason run — the Bears had knocked off ATL in the wildcard and CAR in the divisional before falling to SF in the conference championship.
+
+---
+
+### Super Bowl
+
+| Matchup | Model | Actual | Correct |
+|---------|-------|--------|---------|
+| SF @ BAL | SF | BAL 23-20 | No |
+
+The model projected SF to win. BAL won 23-20 as a 5 seed, the lowest seed to win the championship in Sim League history.
+
+---
+
+### Full Playoff Accuracy Summary
+
+| Round | Correct | Total | Accuracy |
+|-------|---------|-------|----------|
+| Wildcard | 3 | 4 | 75.0% |
+| Divisional | 4 | 4 | 100.0% |
+| Conference | 2 | 2 | 100.0% |
+| Super Bowl | 0 | 1 | 0.0% |
+| **Total** | **9** | **11** | **81.8%** |
+
+The model correctly called every playoff game except the KC wildcard upset and the Super Bowl outcome. BAL as a 5 seed winning it all was not projected at any stage — the Ravens finished 15th in team rating (49.55) despite holding the highest Elo in the league (1652), a disconnect that reflects the model's over-reliance on composite stats relative to game-by-game performance trends.
+
+---
+
+### Super Bowl Champion Projection History
+
+| Stage | Projected Champion |
+|-------|--------------------|
+| Pre-season through Week 9 | 49ers |
+| Week 10 | Steelers |
+| Week 11 | 49ers |
+| Week 12 through Wildcard | Steelers |
+| Divisional | 49ers |
+| Conference | 49ers |
+| **Actual** | **Ravens** |
+
+The model never projected BAL at any stage of the season or playoffs.
+
+
 ## Key Takeaways
 
 **What worked:** The model correctly identified 7 of 12 playoff teams before the season started. Week 3 and Week 9 were predicted with high accuracy. The Steelers were correctly identified as an AFC contender throughout.
