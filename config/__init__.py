@@ -1,0 +1,1 @@
+from config.madden08 import *
