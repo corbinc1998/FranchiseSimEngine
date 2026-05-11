@@ -24456,25 +24456,51 @@
           "completed": true
         },
         {
-          "week": 20,
+          "round": "conference",
+          "conference": "AFC",
+          "matchup": 1,
           "homeTeamId": "sd",
+          "homeTeamSeed": "1",
           "awayTeamId": "bal",
-          "homeScore": null,
-          "awayScore": null,
-          "date": "2026-05-08T00:00:00",
-          "id": "1778000000009",
-          "completed": false,
+          "awayTeamSeed": "5",
+          "homeScore": 24,
+          "awayScore": 28,
+          "date": "2026-05-09T00:00:00.000Z",
+          "broadcast": "",
+          "status": "final",
           "isPlayoff": true,
-          "status": "scheduled"
+          "id": "playoff_1778313369669",
+          "week": 20,
+          "seasonId": "8",
+          "completed": true
         },
         {
-          "week": 20,
+          "round": "conference",
+          "conference": "NFC",
+          "matchup": 1,
           "homeTeamId": "chi",
+          "homeTeamSeed": "3",
+          "awayTeamId": "sf",
+          "awayTeamSeed": "4",
+          "homeScore": 6,
+          "awayScore": 33,
+          "date": "2026-05-09T00:00:00.000Z",
+          "broadcast": "",
+          "status": "final",
+          "isPlayoff": true,
+          "id": "playoff_1778313401890",
+          "week": 20,
+          "seasonId": "8",
+          "completed": true
+        },
+        {
+          "week": 21,
+          "homeTeamId": "bal",
           "awayTeamId": "sf",
           "homeScore": null,
           "awayScore": null,
-          "date": "2026-05-08T00:00:00",
-          "id": "1778000000010",
+          "date": "2026-05-09T00:00:00",
+          "id": "1778000000011",
           "completed": false,
           "isPlayoff": true,
           "status": "scheduled"
@@ -24483,5 +24509,5 @@
       "name": "8"
     }
   },
-  "exportDate": "2026-05-09T07:37:38.811Z"
+  "exportDate": "2026-05-11T10:56:47.202Z"
 }
