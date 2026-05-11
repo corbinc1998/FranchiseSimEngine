@@ -1,1 +1,3186 @@
-[]
+[
+  {
+    "id": "20260511134542652611",
+    "timestamp": "2026-05-11T13:45:42.652633",
+    "trigger": "Pre-season \u2014 rosters integrated",
+    "season_id": 1,
+    "current_week": 1,
+    "predictions": [],
+    "standings": {
+      "pit": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "bal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cle": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cin": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "buf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ne": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "mia": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyj": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ten": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "hou": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ind": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "jax": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "kc": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "oak": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "den": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sd": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "gb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "chi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "det": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "min": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "dal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyg": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "phi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "was": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "no": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "tb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "car": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "atl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sea": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ari": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "stl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      }
+    },
+    "seeds": {
+      "AFC": [
+        "pit",
+        "buf",
+        "ten",
+        "kc",
+        "bal",
+        "cle"
+      ],
+      "NFC": [
+        "gb",
+        "dal",
+        "no",
+        "sf",
+        "chi",
+        "det"
+      ]
+    },
+    "bracket": {
+      "AFC": {
+        "seeds": [
+          "pit",
+          "buf",
+          "ten",
+          "kc",
+          "bal",
+          "cle"
+        ],
+        "wildcard": [
+          {
+            "home_id": "ten",
+            "away_id": "cle",
+            "winner": "ten",
+            "loser": "cle",
+            "home_win_prob": 0.628,
+            "away_win_prob": 0.372,
+            "confidence": 0.256,
+            "predicted_home_score": 32,
+            "predicted_away_score": 30
+          },
+          {
+            "home_id": "kc",
+            "away_id": "bal",
+            "winner": "kc",
+            "loser": "bal",
+            "home_win_prob": 0.716,
+            "away_win_prob": 0.284,
+            "confidence": 0.432,
+            "predicted_home_score": 31,
+            "predicted_away_score": 26
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "pit",
+            "away_id": "kc",
+            "winner": "pit",
+            "loser": "kc",
+            "home_win_prob": 0.581,
+            "away_win_prob": 0.419,
+            "confidence": 0.161,
+            "predicted_home_score": 32,
+            "predicted_away_score": 31
+          },
+          {
+            "home_id": "buf",
+            "away_id": "ten",
+            "winner": "ten",
+            "loser": "buf",
+            "home_win_prob": 0.442,
+            "away_win_prob": 0.558,
+            "confidence": 0.115,
+            "predicted_home_score": 30,
+            "predicted_away_score": 32
+          }
+        ],
+        "conference": {
+          "home_id": "pit",
+          "away_id": "ten",
+          "winner": "pit",
+          "loser": "ten",
+          "home_win_prob": 0.53,
+          "away_win_prob": 0.47,
+          "confidence": 0.06,
+          "predicted_home_score": 33,
+          "predicted_away_score": 32
+        },
+        "champion": "pit"
+      },
+      "NFC": {
+        "seeds": [
+          "gb",
+          "dal",
+          "no",
+          "sf",
+          "chi",
+          "det"
+        ],
+        "wildcard": [
+          {
+            "home_id": "no",
+            "away_id": "det",
+            "winner": "det",
+            "loser": "no",
+            "home_win_prob": 0.499,
+            "away_win_prob": 0.501,
+            "confidence": 0.002,
+            "predicted_home_score": 26,
+            "predicted_away_score": 27
+          },
+          {
+            "home_id": "sf",
+            "away_id": "chi",
+            "winner": "sf",
+            "loser": "chi",
+            "home_win_prob": 0.79,
+            "away_win_prob": 0.21,
+            "confidence": 0.579,
+            "predicted_home_score": 33,
+            "predicted_away_score": 26
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "gb",
+            "away_id": "det",
+            "winner": "gb",
+            "loser": "det",
+            "home_win_prob": 0.525,
+            "away_win_prob": 0.475,
+            "confidence": 0.05,
+            "predicted_home_score": 28,
+            "predicted_away_score": 27
+          },
+          {
+            "home_id": "dal",
+            "away_id": "sf",
+            "winner": "sf",
+            "loser": "dal",
+            "home_win_prob": 0.385,
+            "away_win_prob": 0.615,
+            "confidence": 0.23,
+            "predicted_home_score": 29,
+            "predicted_away_score": 33
+          }
+        ],
+        "conference": {
+          "home_id": "gb",
+          "away_id": "sf",
+          "winner": "sf",
+          "loser": "gb",
+          "home_win_prob": 0.284,
+          "away_win_prob": 0.716,
+          "confidence": 0.432,
+          "predicted_home_score": 27,
+          "predicted_away_score": 33
+        },
+        "champion": "sf"
+      },
+      "superbowl": {
+        "home_id": "pit",
+        "away_id": "sf",
+        "winner": "sf",
+        "loser": "pit",
+        "home_win_prob": 0.49,
+        "away_win_prob": 0.51,
+        "confidence": 0.019,
+        "predicted_home_score": 32,
+        "predicted_away_score": 33
+      },
+      "champion": "sf"
+    },
+    "elo_ratings": {
+      "pit": 1500,
+      "bal": 1500,
+      "cle": 1500,
+      "cin": 1500,
+      "buf": 1500,
+      "ne": 1500,
+      "mia": 1500,
+      "nyj": 1500,
+      "ten": 1500,
+      "hou": 1500,
+      "ind": 1500,
+      "jax": 1500,
+      "kc": 1500,
+      "oak": 1500,
+      "den": 1500,
+      "sd": 1500,
+      "gb": 1500,
+      "chi": 1500,
+      "det": 1500,
+      "min": 1500,
+      "dal": 1500,
+      "nyg": 1500,
+      "phi": 1500,
+      "was": 1500,
+      "no": 1500,
+      "tb": 1500,
+      "car": 1500,
+      "atl": 1500,
+      "sf": 1500,
+      "sea": 1500,
+      "ari": 1500,
+      "stl": 1500
+    },
+    "team_ratings": {
+      "pit": 57.75,
+      "bal": 45.11,
+      "cle": 52.71,
+      "cin": 47.11,
+      "buf": 53.37,
+      "ne": 44.87,
+      "mia": 53.52,
+      "nyj": 47.88,
+      "ten": 57.75,
+      "hou": 41.08,
+      "ind": 44.69,
+      "jax": 48.63,
+      "kc": 55.18,
+      "oak": 39.43,
+      "den": 53.04,
+      "sd": 50.47,
+      "gb": 46.68,
+      "chi": 44.71,
+      "det": 46.92,
+      "min": 57.44,
+      "dal": 52.38,
+      "nyg": 50.26,
+      "phi": 55.42,
+      "was": 48.61,
+      "no": 45.38,
+      "tb": 48.17,
+      "car": 51.94,
+      "atl": 47.53,
+      "sf": 59.74,
+      "sea": 54.14,
+      "ari": 46.7,
+      "stl": 54.85
+    },
+    "power_rankings": [
+      {
+        "rank": 1,
+        "team_id": "sf",
+        "rating": 59.74,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 2,
+        "team_id": "pit",
+        "rating": 57.75,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 3,
+        "team_id": "ten",
+        "rating": 57.75,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 4,
+        "team_id": "min",
+        "rating": 57.44,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 5,
+        "team_id": "phi",
+        "rating": 55.42,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 6,
+        "team_id": "kc",
+        "rating": 55.18,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 7,
+        "team_id": "stl",
+        "rating": 54.85,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 8,
+        "team_id": "sea",
+        "rating": 54.14,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 9,
+        "team_id": "mia",
+        "rating": 53.52,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 10,
+        "team_id": "buf",
+        "rating": 53.37,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 11,
+        "team_id": "den",
+        "rating": 53.04,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 12,
+        "team_id": "cle",
+        "rating": 52.71,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 13,
+        "team_id": "dal",
+        "rating": 52.38,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 14,
+        "team_id": "car",
+        "rating": 51.94,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 15,
+        "team_id": "sd",
+        "rating": 50.47,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 16,
+        "team_id": "nyg",
+        "rating": 50.26,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 17,
+        "team_id": "jax",
+        "rating": 48.63,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 18,
+        "team_id": "was",
+        "rating": 48.61,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 19,
+        "team_id": "tb",
+        "rating": 48.17,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 20,
+        "team_id": "nyj",
+        "rating": 47.88,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 21,
+        "team_id": "atl",
+        "rating": 47.53,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 22,
+        "team_id": "cin",
+        "rating": 47.11,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 23,
+        "team_id": "det",
+        "rating": 46.92,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 24,
+        "team_id": "ari",
+        "rating": 46.7,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 25,
+        "team_id": "gb",
+        "rating": 46.68,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 26,
+        "team_id": "no",
+        "rating": 45.38,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 27,
+        "team_id": "bal",
+        "rating": 45.11,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 28,
+        "team_id": "ne",
+        "rating": 44.87,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 29,
+        "team_id": "chi",
+        "rating": 44.71,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 30,
+        "team_id": "ind",
+        "rating": 44.69,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 31,
+        "team_id": "hou",
+        "rating": 41.08,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 32,
+        "team_id": "oak",
+        "rating": 39.43,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      }
+    ]
+  },
+  {
+    "id": "20260511135827238411",
+    "timestamp": "2026-05-11T13:58:27.238435",
+    "trigger": "Pre-season \u2014 roster ratings tuned",
+    "season_id": 1,
+    "current_week": 1,
+    "predictions": [],
+    "standings": {
+      "pit": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "bal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cle": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cin": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "buf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ne": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "mia": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyj": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ten": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "hou": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ind": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "jax": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "kc": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "oak": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "den": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sd": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "gb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "chi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "det": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "min": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "dal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyg": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "phi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "was": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "no": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "tb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "car": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "atl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sea": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ari": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "stl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      }
+    },
+    "seeds": {
+      "AFC": [
+        "pit",
+        "buf",
+        "ten",
+        "kc",
+        "bal",
+        "cle"
+      ],
+      "NFC": [
+        "gb",
+        "dal",
+        "no",
+        "sf",
+        "chi",
+        "det"
+      ]
+    },
+    "bracket": {
+      "AFC": {
+        "seeds": [
+          "pit",
+          "buf",
+          "ten",
+          "kc",
+          "bal",
+          "cle"
+        ],
+        "wildcard": [
+          {
+            "home_id": "ten",
+            "away_id": "cle",
+            "winner": "ten",
+            "loser": "cle",
+            "home_win_prob": 0.627,
+            "away_win_prob": 0.373,
+            "confidence": 0.254,
+            "predicted_home_score": 31,
+            "predicted_away_score": 28
+          },
+          {
+            "home_id": "kc",
+            "away_id": "bal",
+            "winner": "kc",
+            "loser": "bal",
+            "home_win_prob": 0.73,
+            "away_win_prob": 0.27,
+            "confidence": 0.461,
+            "predicted_home_score": 31,
+            "predicted_away_score": 25
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "pit",
+            "away_id": "kc",
+            "winner": "pit",
+            "loser": "kc",
+            "home_win_prob": 0.561,
+            "away_win_prob": 0.439,
+            "confidence": 0.123,
+            "predicted_home_score": 32,
+            "predicted_away_score": 31
+          },
+          {
+            "home_id": "buf",
+            "away_id": "ten",
+            "winner": "ten",
+            "loser": "buf",
+            "home_win_prob": 0.432,
+            "away_win_prob": 0.568,
+            "confidence": 0.135,
+            "predicted_home_score": 28,
+            "predicted_away_score": 31
+          }
+        ],
+        "conference": {
+          "home_id": "pit",
+          "away_id": "ten",
+          "winner": "pit",
+          "loser": "ten",
+          "home_win_prob": 0.556,
+          "away_win_prob": 0.444,
+          "confidence": 0.112,
+          "predicted_home_score": 32,
+          "predicted_away_score": 31
+        },
+        "champion": "pit"
+      },
+      "NFC": {
+        "seeds": [
+          "gb",
+          "dal",
+          "no",
+          "sf",
+          "chi",
+          "det"
+        ],
+        "wildcard": [
+          {
+            "home_id": "no",
+            "away_id": "det",
+            "winner": "no",
+            "loser": "det",
+            "home_win_prob": 0.517,
+            "away_win_prob": 0.483,
+            "confidence": 0.034,
+            "predicted_home_score": 25,
+            "predicted_away_score": 26
+          },
+          {
+            "home_id": "sf",
+            "away_id": "chi",
+            "winner": "sf",
+            "loser": "chi",
+            "home_win_prob": 0.775,
+            "away_win_prob": 0.225,
+            "confidence": 0.549,
+            "predicted_home_score": 32,
+            "predicted_away_score": 25
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "gb",
+            "away_id": "sf",
+            "winner": "sf",
+            "loser": "gb",
+            "home_win_prob": 0.294,
+            "away_win_prob": 0.706,
+            "confidence": 0.411,
+            "predicted_home_score": 26,
+            "predicted_away_score": 32
+          },
+          {
+            "home_id": "dal",
+            "away_id": "no",
+            "winner": "dal",
+            "loser": "no",
+            "home_win_prob": 0.651,
+            "away_win_prob": 0.349,
+            "confidence": 0.302,
+            "predicted_home_score": 29,
+            "predicted_away_score": 25
+          }
+        ],
+        "conference": {
+          "home_id": "dal",
+          "away_id": "sf",
+          "winner": "sf",
+          "loser": "dal",
+          "home_win_prob": 0.385,
+          "away_win_prob": 0.615,
+          "confidence": 0.231,
+          "predicted_home_score": 29,
+          "predicted_away_score": 32
+        },
+        "champion": "sf"
+      },
+      "superbowl": {
+        "home_id": "pit",
+        "away_id": "sf",
+        "winner": "pit",
+        "loser": "sf",
+        "home_win_prob": 0.503,
+        "away_win_prob": 0.497,
+        "confidence": 0.005,
+        "predicted_home_score": 33,
+        "predicted_away_score": 32
+      },
+      "champion": "pit"
+    },
+    "elo_ratings": {
+      "pit": 1500,
+      "bal": 1500,
+      "cle": 1500,
+      "cin": 1500,
+      "buf": 1500,
+      "ne": 1500,
+      "mia": 1500,
+      "nyj": 1500,
+      "ten": 1500,
+      "hou": 1500,
+      "ind": 1500,
+      "jax": 1500,
+      "kc": 1500,
+      "oak": 1500,
+      "den": 1500,
+      "sd": 1500,
+      "gb": 1500,
+      "chi": 1500,
+      "det": 1500,
+      "min": 1500,
+      "dal": 1500,
+      "nyg": 1500,
+      "phi": 1500,
+      "was": 1500,
+      "no": 1500,
+      "tb": 1500,
+      "car": 1500,
+      "atl": 1500,
+      "sf": 1500,
+      "sea": 1500,
+      "ari": 1500,
+      "stl": 1500
+    },
+    "team_ratings": {
+      "pit": 56.63,
+      "bal": 44.09,
+      "cle": 50.3,
+      "cin": 45.94,
+      "buf": 50.4,
+      "ne": 44.78,
+      "mia": 51.04,
+      "nyj": 46.35,
+      "ten": 55.31,
+      "hou": 38.57,
+      "ind": 44.65,
+      "jax": 46.99,
+      "kc": 55.04,
+      "oak": 36.89,
+      "den": 52.42,
+      "sd": 49.82,
+      "gb": 45.56,
+      "chi": 44.06,
+      "det": 44.97,
+      "min": 54.15,
+      "dal": 50.61,
+      "nyg": 48.51,
+      "phi": 54.63,
+      "was": 47.25,
+      "no": 44.33,
+      "tb": 46.38,
+      "car": 51.47,
+      "atl": 45.29,
+      "sf": 58.0,
+      "sea": 53.96,
+      "ari": 45.26,
+      "stl": 54.51
+    },
+    "power_rankings": [
+      {
+        "rank": 1,
+        "team_id": "sf",
+        "rating": 58.0,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 2,
+        "team_id": "pit",
+        "rating": 56.63,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 3,
+        "team_id": "ten",
+        "rating": 55.31,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 4,
+        "team_id": "kc",
+        "rating": 55.04,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 5,
+        "team_id": "phi",
+        "rating": 54.63,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 6,
+        "team_id": "stl",
+        "rating": 54.51,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 7,
+        "team_id": "min",
+        "rating": 54.15,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 8,
+        "team_id": "sea",
+        "rating": 53.96,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 9,
+        "team_id": "den",
+        "rating": 52.42,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 10,
+        "team_id": "car",
+        "rating": 51.47,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 11,
+        "team_id": "mia",
+        "rating": 51.04,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 12,
+        "team_id": "dal",
+        "rating": 50.61,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 13,
+        "team_id": "buf",
+        "rating": 50.4,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 14,
+        "team_id": "cle",
+        "rating": 50.3,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 15,
+        "team_id": "sd",
+        "rating": 49.82,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 16,
+        "team_id": "nyg",
+        "rating": 48.51,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 17,
+        "team_id": "was",
+        "rating": 47.25,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 18,
+        "team_id": "jax",
+        "rating": 46.99,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 19,
+        "team_id": "tb",
+        "rating": 46.38,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 20,
+        "team_id": "nyj",
+        "rating": 46.35,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 21,
+        "team_id": "cin",
+        "rating": 45.94,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 22,
+        "team_id": "gb",
+        "rating": 45.56,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 23,
+        "team_id": "atl",
+        "rating": 45.29,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 24,
+        "team_id": "ari",
+        "rating": 45.26,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 25,
+        "team_id": "det",
+        "rating": 44.97,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 26,
+        "team_id": "ne",
+        "rating": 44.78,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 27,
+        "team_id": "ind",
+        "rating": 44.65,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 28,
+        "team_id": "no",
+        "rating": 44.33,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 29,
+        "team_id": "bal",
+        "rating": 44.09,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 30,
+        "team_id": "chi",
+        "rating": 44.06,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 31,
+        "team_id": "hou",
+        "rating": 38.57,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 32,
+        "team_id": "oak",
+        "rating": 36.89,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      }
+    ]
+  },
+  {
+    "id": "20260511140242774628",
+    "timestamp": "2026-05-11T14:02:42.774666",
+    "trigger": "Pre-season \u2014 clean slate",
+    "season_id": 1,
+    "current_week": 1,
+    "predictions": [],
+    "standings": {
+      "pit": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "bal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cle": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cin": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "buf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ne": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "mia": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyj": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ten": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "hou": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ind": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "jax": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "kc": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "oak": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "den": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sd": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "gb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "chi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "det": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "min": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "dal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyg": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "phi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "was": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "no": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "tb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "car": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "atl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sea": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ari": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "stl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      }
+    },
+    "seeds": {
+      "AFC": [
+        "pit",
+        "buf",
+        "ten",
+        "kc",
+        "bal",
+        "cle"
+      ],
+      "NFC": [
+        "gb",
+        "dal",
+        "no",
+        "sf",
+        "chi",
+        "det"
+      ]
+    },
+    "bracket": {
+      "AFC": {
+        "seeds": [
+          "pit",
+          "buf",
+          "ten",
+          "kc",
+          "bal",
+          "cle"
+        ],
+        "wildcard": [
+          {
+            "home_id": "ten",
+            "away_id": "cle",
+            "winner": "ten",
+            "loser": "cle",
+            "home_win_prob": 0.529,
+            "away_win_prob": 0.471,
+            "confidence": 0.058,
+            "predicted_home_score": 29,
+            "predicted_away_score": 28
+          },
+          {
+            "home_id": "kc",
+            "away_id": "bal",
+            "winner": "kc",
+            "loser": "bal",
+            "home_win_prob": 0.549,
+            "away_win_prob": 0.451,
+            "confidence": 0.099,
+            "predicted_home_score": 30,
+            "predicted_away_score": 29
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "pit",
+            "away_id": "kc",
+            "winner": "pit",
+            "loser": "kc",
+            "home_win_prob": 0.506,
+            "away_win_prob": 0.494,
+            "confidence": 0.012,
+            "predicted_home_score": 30,
+            "predicted_away_score": 29
+          },
+          {
+            "home_id": "buf",
+            "away_id": "ten",
+            "winner": "buf",
+            "loser": "ten",
+            "home_win_prob": 0.517,
+            "away_win_prob": 0.483,
+            "confidence": 0.034,
+            "predicted_home_score": 27,
+            "predicted_away_score": 28
+          }
+        ],
+        "conference": {
+          "home_id": "pit",
+          "away_id": "buf",
+          "winner": "pit",
+          "loser": "buf",
+          "home_win_prob": 0.575,
+          "away_win_prob": 0.425,
+          "confidence": 0.149,
+          "predicted_home_score": 29,
+          "predicted_away_score": 27
+        },
+        "champion": "pit"
+      },
+      "NFC": {
+        "seeds": [
+          "gb",
+          "dal",
+          "no",
+          "sf",
+          "chi",
+          "det"
+        ],
+        "wildcard": [
+          {
+            "home_id": "no",
+            "away_id": "det",
+            "winner": "no",
+            "loser": "det",
+            "home_win_prob": 0.552,
+            "away_win_prob": 0.448,
+            "confidence": 0.104,
+            "predicted_home_score": 29,
+            "predicted_away_score": 28
+          },
+          {
+            "home_id": "sf",
+            "away_id": "chi",
+            "winner": "sf",
+            "loser": "chi",
+            "home_win_prob": 0.503,
+            "away_win_prob": 0.497,
+            "confidence": 0.006,
+            "predicted_home_score": 28,
+            "predicted_away_score": 29
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "gb",
+            "away_id": "sf",
+            "winner": "gb",
+            "loser": "sf",
+            "home_win_prob": 0.546,
+            "away_win_prob": 0.454,
+            "confidence": 0.091,
+            "predicted_home_score": 29,
+            "predicted_away_score": 28
+          },
+          {
+            "home_id": "dal",
+            "away_id": "no",
+            "winner": "dal",
+            "loser": "no",
+            "home_win_prob": 0.512,
+            "away_win_prob": 0.488,
+            "confidence": 0.025,
+            "predicted_home_score": 28,
+            "predicted_away_score": 29
+          }
+        ],
+        "conference": {
+          "home_id": "gb",
+          "away_id": "dal",
+          "winner": "gb",
+          "loser": "dal",
+          "home_win_prob": 0.546,
+          "away_win_prob": 0.454,
+          "confidence": 0.093,
+          "predicted_home_score": 29,
+          "predicted_away_score": 28
+        },
+        "champion": "gb"
+      },
+      "superbowl": {
+        "home_id": "pit",
+        "away_id": "gb",
+        "winner": "pit",
+        "loser": "gb",
+        "home_win_prob": 0.529,
+        "away_win_prob": 0.471,
+        "confidence": 0.059,
+        "predicted_home_score": 30,
+        "predicted_away_score": 29
+      },
+      "champion": "pit"
+    },
+    "elo_ratings": {
+      "pit": 1500,
+      "bal": 1500,
+      "cle": 1500,
+      "cin": 1500,
+      "buf": 1500,
+      "ne": 1500,
+      "mia": 1500,
+      "nyj": 1500,
+      "ten": 1500,
+      "hou": 1500,
+      "ind": 1500,
+      "jax": 1500,
+      "kc": 1500,
+      "oak": 1500,
+      "den": 1500,
+      "sd": 1500,
+      "gb": 1500,
+      "chi": 1500,
+      "det": 1500,
+      "min": 1500,
+      "dal": 1500,
+      "nyg": 1500,
+      "phi": 1500,
+      "was": 1500,
+      "no": 1500,
+      "tb": 1500,
+      "car": 1500,
+      "atl": 1500,
+      "sf": 1500,
+      "sea": 1500,
+      "ari": 1500,
+      "stl": 1500
+    },
+    "team_ratings": {
+      "pit": 50.54,
+      "bal": 50.74,
+      "cle": 48.97,
+      "cin": 50.44,
+      "buf": 48.28,
+      "ne": 51.84,
+      "mia": 48.9,
+      "nyj": 50.04,
+      "ten": 48.94,
+      "hou": 48.84,
+      "ind": 51.87,
+      "jax": 49.9,
+      "kc": 51.73,
+      "oak": 48.84,
+      "den": 51.19,
+      "sd": 51.12,
+      "gb": 50.57,
+      "chi": 51.13,
+      "det": 49.51,
+      "min": 47.94,
+      "dal": 49.75,
+      "nyg": 49.77,
+      "phi": 50.98,
+      "was": 50.28,
+      "no": 50.62,
+      "tb": 49.78,
+      "car": 51.37,
+      "atl": 49.27,
+      "sf": 49.78,
+      "sea": 51.75,
+      "ari": 50.12,
+      "stl": 51.49
+    },
+    "power_rankings": [
+      {
+        "rank": 1,
+        "team_id": "ind",
+        "rating": 51.87,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 2,
+        "team_id": "ne",
+        "rating": 51.84,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 3,
+        "team_id": "sea",
+        "rating": 51.75,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 4,
+        "team_id": "kc",
+        "rating": 51.73,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 5,
+        "team_id": "stl",
+        "rating": 51.49,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 6,
+        "team_id": "car",
+        "rating": 51.37,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 7,
+        "team_id": "den",
+        "rating": 51.19,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 8,
+        "team_id": "chi",
+        "rating": 51.13,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 9,
+        "team_id": "sd",
+        "rating": 51.12,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 10,
+        "team_id": "phi",
+        "rating": 50.98,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 11,
+        "team_id": "bal",
+        "rating": 50.74,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 12,
+        "team_id": "no",
+        "rating": 50.62,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 13,
+        "team_id": "gb",
+        "rating": 50.57,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 14,
+        "team_id": "pit",
+        "rating": 50.54,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 15,
+        "team_id": "cin",
+        "rating": 50.44,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 16,
+        "team_id": "was",
+        "rating": 50.28,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 17,
+        "team_id": "ari",
+        "rating": 50.12,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 18,
+        "team_id": "nyj",
+        "rating": 50.04,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 19,
+        "team_id": "jax",
+        "rating": 49.9,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 20,
+        "team_id": "tb",
+        "rating": 49.78,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 21,
+        "team_id": "sf",
+        "rating": 49.78,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 22,
+        "team_id": "nyg",
+        "rating": 49.77,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 23,
+        "team_id": "dal",
+        "rating": 49.75,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 24,
+        "team_id": "det",
+        "rating": 49.51,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 25,
+        "team_id": "atl",
+        "rating": 49.27,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 26,
+        "team_id": "cle",
+        "rating": 48.97,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 27,
+        "team_id": "ten",
+        "rating": 48.94,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 28,
+        "team_id": "mia",
+        "rating": 48.9,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 29,
+        "team_id": "hou",
+        "rating": 48.84,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 30,
+        "team_id": "oak",
+        "rating": 48.84,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 31,
+        "team_id": "buf",
+        "rating": 48.28,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 32,
+        "team_id": "min",
+        "rating": 47.94,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      }
+    ]
+  },
+  {
+    "id": "20260511140409806548",
+    "timestamp": "2026-05-11T14:04:09.806575",
+    "trigger": "Pre-season \u2014 spread tuned",
+    "season_id": 1,
+    "current_week": 1,
+    "predictions": [],
+    "standings": {
+      "pit": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "bal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cle": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "cin": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "buf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ne": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "mia": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyj": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ten": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "hou": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ind": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "jax": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "kc": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "oak": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "den": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sd": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "gb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "chi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "det": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "min": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "dal": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "nyg": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "phi": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "was": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "no": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "tb": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "car": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "atl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sf": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "sea": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "ari": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      },
+      "stl": {
+        "w": 0,
+        "l": 0,
+        "t": 0,
+        "pf": 0,
+        "pa": 0,
+        "pd": 0,
+        "win_pct": 0
+      }
+    },
+    "seeds": {
+      "AFC": [
+        "pit",
+        "buf",
+        "ten",
+        "kc",
+        "bal",
+        "cle"
+      ],
+      "NFC": [
+        "gb",
+        "dal",
+        "no",
+        "sf",
+        "chi",
+        "det"
+      ]
+    },
+    "bracket": {
+      "AFC": {
+        "seeds": [
+          "pit",
+          "buf",
+          "ten",
+          "kc",
+          "bal",
+          "cle"
+        ],
+        "wildcard": [
+          {
+            "home_id": "ten",
+            "away_id": "cle",
+            "winner": "ten",
+            "loser": "cle",
+            "home_win_prob": 0.528,
+            "away_win_prob": 0.472,
+            "confidence": 0.055,
+            "predicted_home_score": 28,
+            "predicted_away_score": 27
+          },
+          {
+            "home_id": "kc",
+            "away_id": "bal",
+            "winner": "kc",
+            "loser": "bal",
+            "home_win_prob": 0.594,
+            "away_win_prob": 0.406,
+            "confidence": 0.189,
+            "predicted_home_score": 31,
+            "predicted_away_score": 30
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "pit",
+            "away_id": "kc",
+            "winner": "kc",
+            "loser": "pit",
+            "home_win_prob": 0.451,
+            "away_win_prob": 0.549,
+            "confidence": 0.098,
+            "predicted_home_score": 29,
+            "predicted_away_score": 31
+          },
+          {
+            "home_id": "buf",
+            "away_id": "ten",
+            "winner": "ten",
+            "loser": "buf",
+            "home_win_prob": 0.486,
+            "away_win_prob": 0.514,
+            "confidence": 0.028,
+            "predicted_home_score": 25,
+            "predicted_away_score": 27
+          }
+        ],
+        "conference": {
+          "home_id": "ten",
+          "away_id": "kc",
+          "winner": "kc",
+          "loser": "ten",
+          "home_win_prob": 0.349,
+          "away_win_prob": 0.651,
+          "confidence": 0.302,
+          "predicted_home_score": 27,
+          "predicted_away_score": 31
+        },
+        "champion": "kc"
+      },
+      "NFC": {
+        "seeds": [
+          "gb",
+          "dal",
+          "no",
+          "sf",
+          "chi",
+          "det"
+        ],
+        "wildcard": [
+          {
+            "home_id": "no",
+            "away_id": "det",
+            "winner": "no",
+            "loser": "det",
+            "home_win_prob": 0.603,
+            "away_win_prob": 0.397,
+            "confidence": 0.205,
+            "predicted_home_score": 29,
+            "predicted_away_score": 27
+          },
+          {
+            "home_id": "sf",
+            "away_id": "chi",
+            "winner": "chi",
+            "loser": "sf",
+            "home_win_prob": 0.44,
+            "away_win_prob": 0.56,
+            "confidence": 0.12,
+            "predicted_home_score": 28,
+            "predicted_away_score": 30
+          }
+        ],
+        "divisional": [
+          {
+            "home_id": "gb",
+            "away_id": "chi",
+            "winner": "chi",
+            "loser": "gb",
+            "home_win_prob": 0.492,
+            "away_win_prob": 0.508,
+            "confidence": 0.016,
+            "predicted_home_score": 29,
+            "predicted_away_score": 30
+          },
+          {
+            "home_id": "dal",
+            "away_id": "no",
+            "winner": "no",
+            "loser": "dal",
+            "home_win_prob": 0.471,
+            "away_win_prob": 0.529,
+            "confidence": 0.057,
+            "predicted_home_score": 28,
+            "predicted_away_score": 29
+          }
+        ],
+        "conference": {
+          "home_id": "no",
+          "away_id": "chi",
+          "winner": "chi",
+          "loser": "no",
+          "home_win_prob": 0.496,
+          "away_win_prob": 0.504,
+          "confidence": 0.008,
+          "predicted_home_score": 29,
+          "predicted_away_score": 30
+        },
+        "champion": "chi"
+      },
+      "superbowl": {
+        "home_id": "kc",
+        "away_id": "chi",
+        "winner": "kc",
+        "loser": "chi",
+        "home_win_prob": 0.569,
+        "away_win_prob": 0.431,
+        "confidence": 0.138,
+        "predicted_home_score": 31,
+        "predicted_away_score": 30
+      },
+      "champion": "kc"
+    },
+    "elo_ratings": {
+      "pit": 1500,
+      "bal": 1500,
+      "cle": 1500,
+      "cin": 1500,
+      "buf": 1500,
+      "ne": 1500,
+      "mia": 1500,
+      "nyj": 1500,
+      "ten": 1500,
+      "hou": 1500,
+      "ind": 1500,
+      "jax": 1500,
+      "kc": 1500,
+      "oak": 1500,
+      "den": 1500,
+      "sd": 1500,
+      "gb": 1500,
+      "chi": 1500,
+      "det": 1500,
+      "min": 1500,
+      "dal": 1500,
+      "nyg": 1500,
+      "phi": 1500,
+      "was": 1500,
+      "no": 1500,
+      "tb": 1500,
+      "car": 1500,
+      "atl": 1500,
+      "sf": 1500,
+      "sea": 1500,
+      "ari": 1500,
+      "stl": 1500
+    },
+    "team_ratings": {
+      "pit": 51.79,
+      "bal": 52.48,
+      "cle": 46.58,
+      "cin": 51.47,
+      "buf": 44.26,
+      "ne": 56.15,
+      "mia": 46.32,
+      "nyj": 50.14,
+      "ten": 46.46,
+      "hou": 46.13,
+      "ind": 56.23,
+      "jax": 49.67,
+      "kc": 55.75,
+      "oak": 46.13,
+      "den": 53.95,
+      "sd": 53.75,
+      "gb": 51.89,
+      "chi": 53.78,
+      "det": 48.37,
+      "min": 43.14,
+      "dal": 49.15,
+      "nyg": 49.25,
+      "phi": 53.25,
+      "was": 50.92,
+      "no": 52.08,
+      "tb": 49.26,
+      "car": 54.58,
+      "atl": 47.55,
+      "sf": 49.27,
+      "sea": 55.84,
+      "ari": 50.39,
+      "stl": 54.97
+    },
+    "power_rankings": [
+      {
+        "rank": 1,
+        "team_id": "ind",
+        "rating": 56.23,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 2,
+        "team_id": "ne",
+        "rating": 56.15,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 3,
+        "team_id": "sea",
+        "rating": 55.84,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 4,
+        "team_id": "kc",
+        "rating": 55.75,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 5,
+        "team_id": "stl",
+        "rating": 54.97,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 6,
+        "team_id": "car",
+        "rating": 54.58,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 7,
+        "team_id": "den",
+        "rating": 53.95,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 8,
+        "team_id": "chi",
+        "rating": 53.78,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 9,
+        "team_id": "sd",
+        "rating": 53.75,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 10,
+        "team_id": "phi",
+        "rating": 53.25,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 11,
+        "team_id": "bal",
+        "rating": 52.48,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 12,
+        "team_id": "no",
+        "rating": 52.08,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 13,
+        "team_id": "gb",
+        "rating": 51.89,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 14,
+        "team_id": "pit",
+        "rating": 51.79,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 15,
+        "team_id": "cin",
+        "rating": 51.47,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 16,
+        "team_id": "was",
+        "rating": 50.92,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 17,
+        "team_id": "ari",
+        "rating": 50.39,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 18,
+        "team_id": "nyj",
+        "rating": 50.14,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 19,
+        "team_id": "jax",
+        "rating": 49.67,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 20,
+        "team_id": "sf",
+        "rating": 49.27,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 21,
+        "team_id": "tb",
+        "rating": 49.26,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 22,
+        "team_id": "nyg",
+        "rating": 49.25,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 23,
+        "team_id": "dal",
+        "rating": 49.15,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 24,
+        "team_id": "det",
+        "rating": 48.37,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 25,
+        "team_id": "atl",
+        "rating": 47.55,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 26,
+        "team_id": "cle",
+        "rating": 46.58,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 27,
+        "team_id": "ten",
+        "rating": 46.46,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 28,
+        "team_id": "mia",
+        "rating": 46.32,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 29,
+        "team_id": "hou",
+        "rating": 46.13,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 30,
+        "team_id": "oak",
+        "rating": 46.13,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 31,
+        "team_id": "buf",
+        "rating": 44.26,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      },
+      {
+        "rank": 32,
+        "team_id": "min",
+        "rating": 43.14,
+        "elo": 1500,
+        "projected_w": 0,
+        "projected_l": 0
+      }
+    ]
+  }
+]
