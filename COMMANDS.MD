@@ -1,0 +1,1 @@
+python3 convert_rosters.py --input_dir /Users/corbin/Developer/FranchiseSimEngine/data/raw/roster_source --season 1
