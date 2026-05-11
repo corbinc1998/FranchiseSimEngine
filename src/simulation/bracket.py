@@ -11,7 +11,42 @@ from src.simulation.standings import build_standings, get_playoff_seeds
 import config
 
 
-def simulate_game(home_id, away_id, games, team_stats_map, season_id, elo_ratings):
+def get_actual_result(home_id, away_id, week, games):
+    """Return actual winner if a completed playoff game exists for these teams in this week."""
+    teams = {home_id, away_id}
+    for g in games:
+        if not g.get("isPlayoff") or not g.get("completed"):
+            continue
+        if g.get("week") != week:
+            continue
+        if {g.get("homeTeamId"), g.get("awayTeamId")} == teams:
+            if g.get("homeScore") is not None and g.get("awayScore") is not None:
+                if g["homeScore"] > g["awayScore"]:
+                    winner = g["homeTeamId"]
+                else:
+                    winner = g["awayTeamId"]
+                loser = away_id if winner == home_id else home_id
+                return {
+                    "home_id": home_id,
+                    "away_id": away_id,
+                    "winner": winner,
+                    "loser": loser,
+                    "home_win_prob": None,
+                    "away_win_prob": None,
+                    "confidence": None,
+                    "predicted_home_score": g["homeScore"],
+                    "predicted_away_score": g["awayScore"],
+                    "actual": True,
+                }
+    return None
+
+
+def simulate_game(home_id, away_id, games, team_stats_map, season_id, elo_ratings, week=None):
+    if week is not None:
+        actual = get_actual_result(home_id, away_id, week, games)
+        if actual:
+            return actual
+
     features = build_matchup_features(
         home_id, away_id, games, team_stats_map,
         as_of_week=18, season_id=season_id,
@@ -35,6 +70,14 @@ def simulate_game(home_id, away_id, games, team_stats_map, season_id, elo_rating
 def simulate_bracket(seeds, games, team_stats_map, season_id, elo_ratings):
     bracket = {}
 
+    # Flatten all games for lookup
+    all_games = []
+    for season_data in games.values() if isinstance(games, dict) else []:
+        all_games.extend(season_data.get("games", []))
+
+    # If games is already a flat list, use it directly
+    flat_games = all_games if all_games else games
+
     for conf in config.CONFERENCES:
         conf_seeds = seeds[conf]
         if len(conf_seeds) < 6:
@@ -42,15 +85,14 @@ def simulate_bracket(seeds, games, team_stats_map, season_id, elo_ratings):
 
         s1, s2, s3, s4, s5, s6 = conf_seeds
 
-        # Wildcard — 3 hosts 6, 4 hosts 5
-        wc1 = simulate_game(s3, s6, games, team_stats_map, season_id, elo_ratings)
-        wc2 = simulate_game(s4, s5, games, team_stats_map, season_id, elo_ratings)
+        # Wildcard (week 18)
+        wc1 = simulate_game(s3, s6, flat_games, team_stats_map, season_id, elo_ratings, week=18)
+        wc2 = simulate_game(s4, s5, flat_games, team_stats_map, season_id, elo_ratings, week=18)
 
         wc1_winner = wc1["winner"]
         wc2_winner = wc2["winner"]
 
-        # Divisional — 1 hosts lowest remaining seed, 2 hosts highest remaining seed
-        # remaining seeds after wildcard — sort by original seed position
+        # Divisional (week 19)
         remaining = []
         for team in [wc1_winner, wc2_winner]:
             seed_num = conf_seeds.index(team) + 1
@@ -60,21 +102,20 @@ def simulate_bracket(seeds, games, team_stats_map, season_id, elo_ratings):
         lowest_seed = remaining[-1][1]
         highest_seed = remaining[0][1]
 
-        div1 = simulate_game(s1, lowest_seed, games, team_stats_map, season_id, elo_ratings)
-        div2 = simulate_game(s2, highest_seed, games, team_stats_map, season_id, elo_ratings)
+        div1 = simulate_game(s1, lowest_seed, flat_games, team_stats_map, season_id, elo_ratings, week=19)
+        div2 = simulate_game(s2, highest_seed, flat_games, team_stats_map, season_id, elo_ratings, week=19)
 
         div1_winner = div1["winner"]
         div2_winner = div2["winner"]
 
-        # Conference championship
-        # Higher seed hosts — check original seed positions
+        # Conference championship (week 20)
         div1_seed = conf_seeds.index(div1_winner) + 1
         div2_seed = conf_seeds.index(div2_winner) + 1
 
         if div1_seed <= div2_seed:
-            conf_game = simulate_game(div1_winner, div2_winner, games, team_stats_map, season_id, elo_ratings)
+            conf_game = simulate_game(div1_winner, div2_winner, flat_games, team_stats_map, season_id, elo_ratings, week=20)
         else:
-            conf_game = simulate_game(div2_winner, div1_winner, games, team_stats_map, season_id, elo_ratings)
+            conf_game = simulate_game(div2_winner, div1_winner, flat_games, team_stats_map, season_id, elo_ratings, week=20)
 
         bracket[conf] = {
             "seeds": conf_seeds,
@@ -84,74 +125,12 @@ def simulate_bracket(seeds, games, team_stats_map, season_id, elo_ratings):
             "champion": conf_game["winner"],
         }
 
-    # Super Bowl
+    # Super Bowl (week 21)
     if "AFC" in bracket and "NFC" in bracket:
         afc_champ = bracket["AFC"]["champion"]
         nfc_champ = bracket["NFC"]["champion"]
-        # neutral site — use AFC champ as home by convention
-        sb = simulate_game(afc_champ, nfc_champ, games, team_stats_map, season_id, elo_ratings)
+        sb = simulate_game(afc_champ, nfc_champ, flat_games, team_stats_map, season_id, elo_ratings, week=21)
         bracket["superbowl"] = sb
         bracket["champion"] = sb["winner"]
 
     return bracket
-
-
-def print_bracket(bracket):
-    for conf in config.CONFERENCES:
-        if conf not in bracket:
-            continue
-        b = bracket[conf]
-        print(f"\n{'='*40}")
-        print(f"{conf} BRACKET")
-        print(f"{'='*40}")
-
-        print("\nWILDCARD")
-        for game in b["wildcard"]:
-            h, a = config.ABBR[game["home_id"]], config.ABBR[game["away_id"]]
-            w = config.ABBR[game["winner"]]
-            prob = game["home_win_prob"] if game["winner"] == game["home_id"] else game["away_win_prob"]
-            print(f"  {h} vs {a} → {w} wins ({round(prob*100)}%)")
-
-        print("\nDIVISIONAL")
-        for game in b["divisional"]:
-            h, a = config.ABBR[game["home_id"]], config.ABBR[game["away_id"]]
-            w = config.ABBR[game["winner"]]
-            prob = game["home_win_prob"] if game["winner"] == game["home_id"] else game["away_win_prob"]
-            print(f"  {h} vs {a} → {w} wins ({round(prob*100)}%)")
-
-        print(f"\n{conf} CHAMPIONSHIP")
-        game = b["conference"]
-        h, a = config.ABBR[game["home_id"]], config.ABBR[game["away_id"]]
-        w = config.ABBR[game["winner"]]
-        prob = game["home_win_prob"] if game["winner"] == game["home_id"] else game["away_win_prob"]
-        print(f"  {h} vs {a} → {w} wins ({round(prob*100)}%)")
-        print(f"  {conf} CHAMPION: {config.ABBR[b['champion']]}")
-
-    if "superbowl" in bracket:
-        print(f"\n{'='*40}")
-        print("SUPER BOWL")
-        print(f"{'='*40}")
-        game = bracket["superbowl"]
-        h, a = config.ABBR[game["home_id"]], config.ABBR[game["away_id"]]
-        w = config.ABBR[game["winner"]]
-        prob = game["home_win_prob"] if game["winner"] == game["home_id"] else game["away_win_prob"]
-        print(f"  {h} vs {a} → {w} wins ({round(prob*100)}%)")
-        print(f"\n  SUPER BOWL CHAMPION: {config.ABBR[bracket['champion']]}")
-
-
-if __name__ == "__main__":
-    games = load_games()
-    elo_ratings, elo_history = compute_elo_ratings(games)
-
-    team_stats_map = {}
-    for tid in config.TEAM_IDS:
-        try:
-            team_stats_map[tid] = load_team_stats(tid)
-        except:
-            team_stats_map[tid] = None
-
-    results = predict_season(games, team_stats_map, season_id=8, current_week=1, elo_ratings=elo_ratings)
-    standings = build_standings(results)
-    seeds = get_playoff_seeds(standings, games)
-    bracket = simulate_bracket(seeds, games, team_stats_map, season_id=8, elo_ratings=elo_ratings)
-    print_bracket(bracket)
