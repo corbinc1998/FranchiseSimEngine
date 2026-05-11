@@ -24494,16 +24494,23 @@
           "completed": true
         },
         {
-          "week": 21,
+          "round": "superbowl",
+          "conference": "AFC",
+          "matchup": 1,
           "homeTeamId": "bal",
+          "homeTeamSeed": "5",
           "awayTeamId": "sf",
-          "homeScore": null,
-          "awayScore": null,
-          "date": "2026-05-09T00:00:00",
-          "id": "1778000000011",
-          "completed": false,
+          "awayTeamSeed": "4",
+          "homeScore": 23,
+          "awayScore": 20,
+          "date": "2026-05-09T00:00:00.000Z",
+          "broadcast": "",
+          "status": "final",
           "isPlayoff": true,
-          "status": "scheduled"
+          "id": "playoff_1778318990733",
+          "week": 21,
+          "seasonId": "8",
+          "completed": true
         }
       ],
       "name": "8"
