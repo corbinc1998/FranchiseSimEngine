@@ -1,0 +1,1028 @@
+{
+  "coaches": [
+    {
+      "coach_id": "coach_mike_tomlin_pit",
+      "name": "Mike Tomlin",
+      "history": [
+        {
+          "season": 1,
+          "team": "pit"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "pit",
+          "offensive_philosophy": {
+            "scheme": "Vertical Passing",
+            "run": 49,
+            "pass": 51,
+            "conservative": 51,
+            "aggressive": 49,
+            "rb2_carries": 15,
+            "rb1_carries": 85
+          },
+          "defensive_philosophy": {
+            "scheme": "3-4",
+            "run": 45,
+            "pass": 55,
+            "conservative": 54,
+            "aggressive": 46
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_brian_billick_bal",
+      "name": "Brian Billick",
+      "history": [
+        {
+          "season": 1,
+          "team": "bal"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "bal",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 53,
+            "pass": 47,
+            "conservative": 48,
+            "aggressive": 52,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 49,
+            "pass": 51,
+            "conservative": 52,
+            "aggressive": 48
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_romeo_crennel_cle",
+      "name": "Romeo Crennel",
+      "history": [
+        {
+          "season": 1,
+          "team": "cle"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "cle",
+          "offensive_philosophy": {
+            "scheme": "Vertical Passing",
+            "run": 48,
+            "pass": 52,
+            "conservative": 52,
+            "aggressive": 48,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "3-4",
+            "run": 53,
+            "pass": 47,
+            "conservative": 49,
+            "aggressive": 51
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_marvin_lewis_cin",
+      "name": "Marvin Lewis",
+      "history": [
+        {
+          "season": 1,
+          "team": "cin"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "cin",
+          "offensive_philosophy": {
+            "scheme": "Vertical Passing",
+            "run": 48,
+            "pass": 52,
+            "conservative": 50,
+            "aggressive": 50,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 49,
+            "aggressive": 51
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_dick_jauron_buf",
+      "name": "Dick Jauron",
+      "history": [
+        {
+          "season": 1,
+          "team": "buf"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "buf",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 52,
+            "pass": 48,
+            "conservative": 48,
+            "aggressive": 52,
+            "rb2_carries": 35,
+            "rb1_carries": 65
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 49,
+            "pass": 51,
+            "conservative": 50,
+            "aggressive": 50
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_bill_belichick_ne",
+      "name": "Bill Belichick",
+      "history": [
+        {
+          "season": 1,
+          "team": "ne"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "ne",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 44,
+            "pass": 56,
+            "conservative": 49,
+            "aggressive": 51,
+            "rb2_carries": 15,
+            "rb1_carries": 85
+          },
+          "defensive_philosophy": {
+            "scheme": "3-4",
+            "run": 48,
+            "pass": 52,
+            "conservative": 46,
+            "aggressive": 54
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_cam_cameron_mia",
+      "name": "Cam Cameron",
+      "history": [
+        {
+          "season": 1,
+          "team": "mia"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "mia",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 54,
+            "pass": 46,
+            "conservative": 59,
+            "aggressive": 51,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "3-4",
+            "run": 51,
+            "pass": 49,
+            "conservative": 49,
+            "aggressive": 51
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_eric_mangini_nyj",
+      "name": "Eric Mangini",
+      "history": [
+        {
+          "season": 1,
+          "team": "nyj"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "nyj",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 53,
+            "pass": 47,
+            "conservative": 49,
+            "aggressive": 51,
+            "rb2_carries": 21,
+            "rb1_carries": 79
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 52,
+            "aggressive": 48
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_jeff_fisher_ten",
+      "name": "Jeff Fisher",
+      "history": [
+        {
+          "season": 1,
+          "team": "ten"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "ten",
+          "offensive_philosophy": {
+            "scheme": "Establish Run",
+            "run": 52,
+            "pass": 48,
+            "conservative": 50,
+            "aggressive": 50,
+            "rb2_carries": 35,
+            "rb1_carries": 65
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 53,
+            "pass": 47,
+            "conservative": 52,
+            "aggressive": 48
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_gary_kubiak_hou",
+      "name": "Gary Kubiak",
+      "history": [
+        {
+          "season": 1,
+          "team": "hou"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "hou",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 53,
+            "pass": 47,
+            "conservative": 48,
+            "aggressive": 52,
+            "rb2_carries": 21,
+            "rb1_carries": 79
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 54,
+            "aggressive": 46
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_tony_dungy_ind",
+      "name": "Tony Dungy",
+      "history": [
+        {
+          "season": 1,
+          "team": "ind"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "ind",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 43,
+            "pass": 57,
+            "conservative": 49,
+            "aggressive": 51,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 48,
+            "pass": 52,
+            "conservative": 51,
+            "aggressive": 49
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_jack_del_rio_jax",
+      "name": "Jack Del Rio",
+      "history": [
+        {
+          "season": 1,
+          "team": "jax"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "jax",
+          "offensive_philosophy": {
+            "scheme": "Establish Run",
+            "run": 52,
+            "pass": 48,
+            "conservative": 51,
+            "aggressive": 49,
+            "rb2_carries": 50,
+            "rb1_carries": 50
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 52,
+            "pass": 48,
+            "conservative": 54,
+            "aggressive": 46
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_herm_edwards_kc",
+      "name": "Herm Edwards",
+      "history": [
+        {
+          "season": 1,
+          "team": "kc"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "kc",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 46,
+            "pass": 54,
+            "conservative": 48,
+            "aggressive": 52,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 47,
+            "pass": 53,
+            "conservative": 49,
+            "aggressive": 51
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_lane_kiffin_oak",
+      "name": "Lane Kiffin",
+      "history": [
+        {
+          "season": 1,
+          "team": "oak"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "oak",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 48,
+            "pass": 52,
+            "conservative": 49,
+            "aggressive": 51,
+            "rb2_carries": 30,
+            "rb1_carries": 70
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 52,
+            "aggressive": 48
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_mike_shanahan_den",
+      "name": "Mike Shanahan",
+      "history": [
+        {
+          "season": 1,
+          "team": "den"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "den",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 48,
+            "pass": 52,
+            "conservative": 48,
+            "aggressive": 52,
+            "rb2_carries": 18,
+            "rb1_carries": 82
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 49,
+            "pass": 51,
+            "conservative": 47,
+            "aggressive": 53
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_norv_turner_sd",
+      "name": "Norv Turner",
+      "history": [
+        {
+          "season": 1,
+          "team": "sd"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "sd",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 47,
+            "pass": 53,
+            "conservative": 48,
+            "aggressive": 52,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "3-4",
+            "run": 49,
+            "pass": 51,
+            "conservative": 51,
+            "aggressive": 49
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_mike_mccarthy_gb",
+      "name": "Mike McCarthy",
+      "history": [
+        {
+          "season": 1,
+          "team": "gb"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "gb",
+          "offensive_philosophy": {
+            "scheme": "Establish Run",
+            "run": 52,
+            "pass": 48,
+            "conservative": 51,
+            "aggressive": 49,
+            "rb2_carries": 50,
+            "rb1_carries": 50
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 53,
+            "pass": 47,
+            "conservative": 51,
+            "aggressive": 49
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_lovie_smith_chi",
+      "name": "Lovie Smith",
+      "history": [
+        {
+          "season": 1,
+          "team": "chi"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "chi",
+          "offensive_philosophy": {
+            "scheme":"Vertical Passing",
+            "run": 48,
+            "pass": 52,
+            "conservative": 52,
+            "aggressive": 48,
+            "rb2_carries": 15,
+            "rb1_carries": 85
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 49,
+            "pass": 51,
+            "conservative": 48,
+            "aggressive": 52
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_rod_marinelli_det",
+      "name": "Rod Marinelli",
+      "history": [
+        {
+          "season": 1,
+          "team": "det"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "det",
+          "offensive_philosophy": {
+            "scheme": "Vertical Passing",
+            "run": 48,
+            "pass": 52,
+            "conservative": 51,
+            "aggressive": 49,
+            "rb2_carries": 50,
+            "rb1_carries": 50
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 49,
+            "aggressive": 51
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_brad_childress_min",
+      "name": "Brad Childress",
+      "history": [
+        {
+          "season": 1,
+          "team": "min"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "min",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 51,
+            "pass": 49,
+            "conservative": 47,
+            "aggressive": 53,
+            "rb2_carries": 35,
+            "rb1_carries": 65
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 52,
+            "pass": 48,
+            "conservative": 53,
+            "aggressive": 47
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_wade_phillips_dal",
+      "name": "Wade Phillips",
+      "history": [
+        {
+          "season": 1,
+          "team": "dal"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "dal",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 52,
+            "pass": 48,
+            "conservative": 49,
+            "aggressive": 51,
+            "rb2_carries": 50,
+            "rb1_carries": 50
+          },
+          "defensive_philosophy": {
+            "scheme": "3-4",
+            "run": 49,
+            "pass": 51,
+            "conservative": 48,
+            "aggressive": 52
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_tom_coughlin_nyg",
+      "name": "Tom Coughlin",
+      "history": [
+        {
+          "season": 1,
+          "team": "nyg"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "nyg",
+          "offensive_philosophy": {
+            "scheme": "Establish Run",
+            "run": 52,
+            "pass": 48,
+            "conservative": 54,
+            "aggressive": 46,
+            "rb2_carries": 30,
+            "rb1_carries": 70
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 50,
+            "aggressive": 50
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_andy_reid_phi",
+      "name": "Andy Reid",
+      "history": [
+        {
+          "season": 1,
+          "team": "phi"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "phi",
+          "offensive_philosophy": {
+            "scheme": "Vertical Passing",
+            "run": 46,
+            "pass": 54,
+            "conservative": 52,
+            "aggressive": 48,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 52,
+            "pass": 48,
+            "conservative": 42,
+            "aggressive": 58
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_joe_gibbs_was",
+      "name": "Joe Gibbs",
+      "history": [
+        {
+          "season": 1,
+          "team": "was"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "was",
+          "offensive_philosophy": {
+            "scheme": "Establish Run",
+            "run": 53,
+            "pass": 47,
+            "conservative": 51,
+            "aggressive": 49,
+            "rb2_carries": 18,
+            "rb1_carries": 82
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 49,
+            "pass": 51,
+            "conservative": 48,
+            "aggressive": 52
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_sean_payton_no",
+      "name": "Sean Payton",
+      "history": [
+        {
+          "season": 1,
+          "team": "no"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "no",
+          "offensive_philosophy": {
+            "scheme": "Establish Run",
+            "run": 53,
+            "pass": 47,
+            "conservative": 52,
+            "aggressive": 48,
+            "rb2_carries": 50,
+            "rb1_carries": 50
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 49,
+            "aggressive": 51
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_jon_gruden_tb",
+      "name": "Jon Gruden",
+      "history": [
+        {
+          "season": 1,
+          "team": "tb"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "tb",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 44,
+            "pass": 56,
+            "conservative": 46,
+            "aggressive": 54,
+            "rb2_carries": 18,
+            "rb1_carries": 82
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 46,
+            "pass": 54,
+            "conservative": 49,
+            "aggressive": 51
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_john_fox_car",
+      "name": "John Fox",
+      "history": [
+        {
+          "season": 1,
+          "team": "car"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "car",
+          "offensive_philosophy": {
+            "scheme": "Establish Run",
+            "run": 53,
+            "pass": 47,
+            "conservative": 52,
+            "aggressive": 48,
+            "rb2_carries": 40,
+            "rb1_carries": 60
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 47,
+            "aggressive": 53
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_bobby_petrino_atl",
+      "name": "Bobby Petrino",
+      "history": [
+        {
+          "season": 1,
+          "team": "atl"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "atl",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 48,
+            "pass": 52,
+            "conservative": 49,
+            "aggressive": 51,
+            "rb2_carries": 24,
+            "rb1_carries": 76
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 51,
+            "pass": 49,
+            "conservative": 52,
+            "aggressive": 48
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_mike_nolan_sf",
+      "name": "Mike Nolan",
+      "history": [
+        {
+          "season": 1,
+          "team": "sf"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "sf",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 48,
+            "pass": 52,
+            "conservative": 49,
+            "aggressive": 51,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "3-4",
+            "run": 51,
+            "pass": 49,
+            "conservative": 52,
+            "aggressive": 48
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_mike_holmgren_sea",
+      "name": "Mike Holmgren",
+      "history": [
+        {
+          "season": 1,
+          "team": "sea"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "sea",
+          "offensive_philosophy": {
+            "scheme": "Vertical Passing",
+            "run": 47,
+            "pass": 53,
+            "conservative": 50,
+            "aggressive": 50,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 46,
+            "pass": 54,
+            "conservative": 53,
+            "aggressive": 47
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_ken_whisenhunt_ari",
+      "name": "Ken Whisenhunt",
+      "history": [
+        {
+          "season": 1,
+          "team": "ari"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "ari",
+          "offensive_philosophy": {
+            "scheme": "Ball Control",
+            "run": 55,
+            "pass": 45,
+            "conservative": 48,
+            "aggressive": 52,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 49,
+            "pass": 51,
+            "conservative": 52,
+            "aggressive": 48
+          }
+        }
+      },
+      "player_relationships": []
+    },
+    {
+      "coach_id": "coach_scott_linehan_stl",
+      "name": "Scott Linehan",
+      "history": [
+        {
+          "season": 1,
+          "team": "stl"
+        }
+      ],
+      "seasons": {
+        "1": {
+          "team": "stl",
+          "offensive_philosophy": {
+            "scheme": "West Coast",
+            "run": 43,
+            "pass": 57,
+            "conservative": 46,
+            "aggressive": 54,
+            "rb2_carries": 10,
+            "rb1_carries": 90
+          },
+          "defensive_philosophy": {
+            "scheme": "4-3",
+            "run": 48,
+            "pass": 52,
+            "conservative": 47,
+            "aggressive": 53
+          }
+        }
+      },
+      "player_relationships": []
+    }
+  ]
+}
