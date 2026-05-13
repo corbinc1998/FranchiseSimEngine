@@ -1,3 +1,5 @@
 outline.txt
 __pycache__/
-venv/
+venv/dashboard/node_modules/
+dashboard/dist/
+node_modules
