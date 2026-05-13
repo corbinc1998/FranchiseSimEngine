@@ -108,7 +108,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR      = os.path.join(BASE_DIR, "data")
 RAW_DIR       = os.path.join(DATA_DIR, "raw")
 PROCESSED_DIR = os.path.join(DATA_DIR, "processed")
-
+DEPTH_CHARTS_DIR = os.path.join(BASE_DIR, "data", "raw", "depth_charts")
 GAMES_PATH        = os.path.join(RAW_DIR,       "games.json")
 TEAM_STATS_DIR    = os.path.join(RAW_DIR,       "team_stats")
 PREDICTIONS_PATH  = os.path.join(PROCESSED_DIR, "predictions_log.json")
