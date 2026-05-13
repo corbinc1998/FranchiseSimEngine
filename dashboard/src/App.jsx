@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 import { api } from './api'
-import Predictions from './views/Predictions'
-import Standings from './views/Standings'
-import Trades from './views/Trades'
-import RosterMoves from './views/RosterMoves'
+import Predictions  from './views/Predictions'
+import WeeklyGames  from './views/WeeklyGames'
+import Standings    from './views/Standings'
+import Trades       from './views/Trades'
+import RosterMoves  from './views/RosterMoves'
 
 const VIEWS = [
-  { id: 'predictions', label: 'Predictions', icon: '◈' },
-  { id: 'standings',   label: 'Standings',   icon: '≡' },
-  { id: 'trades',      label: 'Trades',      icon: '⇄' },
+  { id: 'predictions', label: 'Predictions',  icon: '◈' },
+  { id: 'weekly',      label: 'Week by Week', icon: '◷' },
+  { id: 'standings',   label: 'Standings',    icon: '≡' },
+  { id: 'trades',      label: 'Trades',       icon: '⇄' },
   { id: 'roster',      label: 'Roster Moves', icon: '✦' },
 ]
 
@@ -54,7 +56,7 @@ export default function App() {
         <div className="sidebar-footer">
           {season && (
             <div style={{ marginBottom: 6 }}>
-              <div style={{ color: 'var(--text-dim)', marginBottom: 4 }}>SEASON</div>
+              <div style={{ color: 'var(--text-dim)', marginBottom: 4, fontSize: 10 }}>SEASON</div>
               <select
                 value={season}
                 onChange={e => setSeason(Number(e.target.value))}
@@ -88,9 +90,10 @@ export default function App() {
         ) : (
           <>
             {view === 'predictions' && <Predictions {...sharedProps} />}
-            {view === 'standings'   && <Standings   {...sharedProps} />}
-            {view === 'trades'      && <Trades      {...sharedProps} />}
-            {view === 'roster'      && <RosterMoves {...sharedProps} />}
+            {view === 'weekly'      && <WeeklyGames  {...sharedProps} />}
+            {view === 'standings'   && <Standings    {...sharedProps} />}
+            {view === 'trades'      && <Trades       {...sharedProps} />}
+            {view === 'roster'      && <RosterMoves  {...sharedProps} />}
           </>
         )}
       </main>

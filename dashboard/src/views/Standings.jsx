@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { TeamCell } from '../components/TeamLogo'
 
 function winPct(w, l, t) {
   const total = w + l + t
   if (!total) return '.000'
   return ((w + 0.5 * t) / total).toFixed(3).replace('0.', '.')
-}
-
-function streak(team) {
-  if (!team?.streak) return '—'
-  return team.streak
 }
 
 export default function Standings({ season, cfgData }) {
@@ -27,9 +23,8 @@ export default function Standings({ season, cfgData }) {
 
   if (loading) return <div className="loading">Loading standings...</div>
 
-  const standings = data?.standings || {}
-  const abbr      = cfgData?.abbr || {}
-  const teams_cfg = cfgData?.teams || {}
+  const standings  = data?.standings || {}
+  const teams_cfg  = cfgData?.teams  || {}
 
   const CONF_DIVS = {
     AFC: ['North', 'East', 'South', 'West'],
@@ -43,9 +38,7 @@ export default function Standings({ season, cfgData }) {
       .sort((a, b) => {
         const sa = standings[a] || { w: 0, l: 0, t: 0 }
         const sb = standings[b] || { w: 0, l: 0, t: 0 }
-        const pa = sa.w + 0.5 * sa.t
-        const pb = sb.w + 0.5 * sb.t
-        return pb - pa
+        return (sb.w + 0.5 * sb.t) - (sa.w + 0.5 * sa.t)
       })
   }
 
@@ -79,30 +72,28 @@ export default function Standings({ season, cfgData }) {
                           <th className="right">PF</th>
                           <th className="right">PA</th>
                           <th className="right">DIFF</th>
-                          <th className="right" style={{ paddingRight: 14 }}>STRK</th>
                         </tr>
                       </thead>
                       <tbody>
                         {divTeams.map((tid, idx) => {
                           const s    = standings[tid] || { w: 0, l: 0, t: 0, pf: 0, pa: 0 }
                           const diff = (s.pf || 0) - (s.pa || 0)
-                          const isDivLeader = idx === 0
 
                           return (
                             <tr key={tid}>
                               <td>
-                                <span style={{
-                                  fontFamily: 'var(--display)',
-                                  fontSize: 14,
-                                  fontWeight: isDivLeader ? 700 : 500,
-                                  letterSpacing: '0.04em',
-                                  color: isDivLeader ? 'var(--text-bright)' : 'var(--text)',
-                                }}>
-                                  {abbr[tid] || tid.toUpperCase()}
-                                </span>
-                                {isDivLeader && s.w > 0 && (
-                                  <span className="chip chip-amber" style={{ marginLeft: 6, fontSize: 9 }}>1st</span>
-                                )}
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                                  <TeamCell
+                                    teamId={tid}
+                                    cfgData={cfgData}
+                                    logoSize={20}
+                                    fontSize={13}
+                                    bold={idx === 0}
+                                  />
+                                  {idx === 0 && s.w > 0 && (
+                                    <span className="chip chip-amber" style={{ fontSize: 9 }}>1st</span>
+                                  )}
+                                </div>
                               </td>
                               <td className="right" style={{ fontFamily: 'var(--mono)', color: 'var(--text-bright)', fontWeight: 500 }}>{s.w}</td>
                               <td className="right" style={{ fontFamily: 'var(--mono)' }}>{s.l}</td>
@@ -115,9 +106,6 @@ export default function Standings({ season, cfgData }) {
                                 color: diff > 0 ? 'var(--green)' : diff < 0 ? 'var(--red)' : 'var(--text-dim)'
                               }}>
                                 {diff > 0 ? `+${diff}` : diff}
-                              </td>
-                              <td className="right" style={{ fontFamily: 'var(--mono)', color: 'var(--text-dim)', paddingRight: 14 }}>
-                                {streak(s)}
                               </td>
                             </tr>
                           )
