@@ -1,7 +1,7 @@
 """
 src/stats/loader.py
 
-Loads rosters, coaches, and depth charts.
+Loads rosters, coaches, depth charts, and injuries.
 """
 
 import os
@@ -16,6 +16,8 @@ DEPTH_CHARTS_DIR = os.path.join(
     "data", "raw", "depth_charts"
 )
 
+
+# ── Roster ────────────────────────────────────────────────────────────────────
 
 def load_roster(season_id):
     if season_id in _roster_cache:
@@ -54,6 +56,8 @@ def get_team_overall(season_id, team_id):
     return roster.get("teams", {}).get(team_id, {}).get("overall")
 
 
+# ── Coaches ───────────────────────────────────────────────────────────────────
+
 def load_coaches(season_id=None):
     if not os.path.exists(config.COACHES_PATH):
         return None
@@ -61,11 +65,10 @@ def load_coaches(season_id=None):
         data = json.load(f)
     if season_id is None:
         return data
-    coaches = []
-    for coach in data.get("coaches", []):
-        if str(season_id) in coach.get("seasons", {}):
-            coaches.append(coach)
-    return coaches
+    return [
+        c for c in data.get("coaches", [])
+        if str(season_id) in c.get("seasons", {})
+    ]
 
 
 def get_team_coach(season_id, team_id):
@@ -73,29 +76,24 @@ def get_team_coach(season_id, team_id):
     if not coaches:
         return None
     for coach in coaches:
-        season_data = coach.get("seasons", {}).get(str(season_id), {})
-        if season_data.get("team") == team_id:
+        if coach.get("seasons", {}).get(str(season_id), {}).get("team") == team_id:
             return coach
     return None
 
 
+# ── Depth charts ──────────────────────────────────────────────────────────────
+
 def load_depth_chart(season_id, week):
     """
     Load depth chart for a given season and week.
-    Falls back to most recent available week if exact week not found.
-    Returns dict of {team_id: {position: [player_dicts in depth order]}}
+    Falls back to most recent available week if exact not found.
     """
     cache_key = (season_id, week)
     if cache_key in _depth_chart_cache:
         return _depth_chart_cache[cache_key]
 
-    # Try exact week first
-    path = os.path.join(
-        DEPTH_CHARTS_DIR,
-        f"season_{season_id}_week_{week:02d}.json"
-    )
+    path = os.path.join(DEPTH_CHARTS_DIR, f"season_{season_id}_week_{week:02d}.json")
 
-    # Fall back to most recent week if exact not found
     if not os.path.exists(path):
         available = []
         if os.path.exists(DEPTH_CHARTS_DIR):
@@ -108,11 +106,8 @@ def load_depth_chart(season_id, week):
                     except ValueError:
                         continue
         if available:
-            best_week = max(available)
-            path = os.path.join(
-                DEPTH_CHARTS_DIR,
-                f"season_{season_id}_week_{best_week:02d}.json"
-            )
+            best = max(available)
+            path = os.path.join(DEPTH_CHARTS_DIR, f"season_{season_id}_week_{best:02d}.json")
         else:
             _depth_chart_cache[cache_key] = {}
             return {}
@@ -131,36 +126,34 @@ def load_depth_chart(season_id, week):
 
 def get_starter(season_id, week, team_id, position):
     """
-    Get the actual starter at a position for a team in a given week.
-    Returns the player dict from the roster, or None if not found.
-
-    Uses depth chart override if available, otherwise falls back to
-    highest-overall player at that position (Madden AI default).
+    Get the actual starter at a position. Uses depth chart if available,
+    falls back to highest-overall player.
     """
     depth_chart = load_depth_chart(season_id, week)
     team_chart  = depth_chart.get(team_id, {})
 
     if position in team_chart and team_chart[position]:
-        # Use depth chart override
         starter_id = team_chart[position][0].get("player_id")
         if starter_id:
             player = get_player(season_id, starter_id)
-            if player:
+            if player and not player.get("injury", {}).get("active"):
                 return player
 
-    # Fall back to highest-overall at position
+    # Fall back to highest-overall healthy player at position
     players = get_team_players(season_id, team_id)
-    at_pos  = [p for p in players if p.get("position") == position and p.get("overall")]
+    at_pos  = [
+        p for p in players
+        if p.get("position") == position
+        and p.get("overall")
+        and not p.get("injury", {}).get("active")
+    ]
     if not at_pos:
         return None
     return max(at_pos, key=lambda p: p.get("overall", 0))
 
 
 def get_depth_order(season_id, week, team_id, position):
-    """
-    Get the full depth order at a position for a team.
-    Returns list of player dicts in depth order.
-    """
+    """Get full depth order at a position, respecting depth chart overrides."""
     depth_chart = load_depth_chart(season_id, week)
     team_chart  = depth_chart.get(team_id, {})
     roster      = load_roster(season_id)
@@ -174,35 +167,62 @@ def get_depth_order(season_id, week, team_id, position):
             player = next((p for p in at_pos if p.get("player_id") == pid), None)
             if player:
                 ordered.append(player)
-        # Append any remaining players not in the depth chart
         listed = set(ordered_ids)
         for p in sorted(at_pos, key=lambda x: x.get("overall") or 0, reverse=True):
             if p.get("player_id") not in listed:
                 ordered.append(p)
         return ordered
 
-    # Default: sort by overall
     return sorted(at_pos, key=lambda p: p.get("overall") or 0, reverse=True)
 
 
+# ── Injuries ──────────────────────────────────────────────────────────────────
+
+def get_team_injuries(season_id, team_id):
+    """Get all active injuries for a team."""
+    roster = load_roster(season_id)
+    if not roster:
+        return []
+    players = roster.get("teams", {}).get(team_id, {}).get("players", [])
+    return [
+        {
+            "player_id": p.get("player_id"),
+            "name":      p.get("name"),
+            "position":  p.get("position"),
+            "overall":   p.get("overall"),
+            "team":      team_id,
+            "starter":   True,
+            **p.get("injury", {}),
+        }
+        for p in players
+        if p.get("injury", {}).get("active")
+    ]
+
+
+def get_all_injuries(season_id):
+    """Get all active injuries across all 32 teams."""
+    injuries = []
+    for tid in config.TEAM_IDS:
+        injuries.extend(get_team_injuries(season_id, tid))
+    return injuries
+
+
+# ── Trade history display ─────────────────────────────────────────────────────
+
 def team_label_for_season(player, season_id):
     """
-    Returns the team display string for a player in a given season.
-    Single team all season: 'BUF'
-    Traded mid-season:      'BUF-MIN'
+    Returns team display string for a player in a given season.
+    Single team: 'BUF'   Traded mid-season: 'BUF-MIN'
     """
     history      = player.get("trade_history", [])
     season_moves = sorted(
         [h for h in history if str(h.get("season")) == str(season_id)],
         key=lambda h: h.get("week", 0)
     )
-
     if not season_moves:
         return config.ABBR.get(player.get("team_id", ""), "???")
-
     teams = [season_moves[0]["from_team"]]
     for move in season_moves:
         if move["to_team"] not in teams:
             teams.append(move["to_team"])
-
     return "-".join(config.ABBR.get(t, t.upper()) for t in teams)

@@ -3,10 +3,9 @@ src/gm/trade_engine.py
 
 Trade proposal engine for the AI GM.
 
-A trade proposal is only generated when the incoming player is a
-meaningful acquisition — an OVR upgrade, a youth/development asset,
-or carries notable attribute advantages over the current starter.
-Proposals where both teams receive worse players are filtered out.
+Injured players are excluded from trade proposals on both sides.
+Only meaningful acquisitions (OVR upgrade, youth asset, or attribute
+advantage) are proposed.
 """
 
 import sys
@@ -93,9 +92,13 @@ def _player_summary(player):
 # ── Attribute analysis ────────────────────────────────────────────────────────
 
 def _get_best_at_position(roster, team_id, position):
-    """Find the highest-overall current player at a position on a team."""
     players = roster.get("teams", {}).get(team_id, {}).get("players", [])
-    at_pos  = [p for p in players if p.get("position") == position and p.get("overall")]
+    at_pos  = [
+        p for p in players
+        if p.get("position") == position
+        and p.get("overall")
+        and not p.get("injury", {}).get("active")
+    ]
     if not at_pos:
         return None
     return max(at_pos, key=lambda p: p.get("overall", 0))
@@ -104,14 +107,7 @@ def _get_best_at_position(roster, team_id, position):
 def _is_meaningful_acquisition(incoming, receiving_team_id, roster):
     """
     Return True only if the incoming player is worth acquiring.
-
-    Passes if:
-    - No current player at this position (immediate starter)
-    - OVR upgrade over current best
-    - OVR within 10 AND age <= 24 AND high trajectory (development bet)
-    - OVR within 5 AND 2+ key attributes improved by >= 5 (attribute upgrade)
-
-    Blocks proposals where the incoming player is simply worse with no upside.
+    Blocks proposals where the player is worse with no upside.
     """
     position = incoming.get("position", "")
     in_ovr   = incoming.get("overall") or 70
@@ -127,18 +123,15 @@ def _is_meaningful_acquisition(incoming, receiving_team_id, roster):
     cur_attrs = current.get("attributes", {})
     ovr_delta = in_ovr - cur_ovr
 
-    # Clear OVR upgrade or equal
     if ovr_delta >= 0:
         return True
 
-    # OVR downgrade — accept if youth + high trajectory within gap
     if (in_age <= YOUTH_AGE_THRESHOLD
             and in_traj == "high"
             and abs(ovr_delta) <= HIGH_UPSIDE_OVR_GAP):
         return True
 
-    # OVR downgrade — accept if 2+ key attributes are notably better within small gap
-    key_attrs = KEY_ATTRIBUTES.get(position, [])
+    key_attrs    = KEY_ATTRIBUTES.get(position, [])
     improvements = sum(
         1 for attr in key_attrs
         if (in_attrs.get(attr) or 0) - (cur_attrs.get(attr) or 0) >= ATTR_NOTABLE_DELTA
@@ -150,16 +143,11 @@ def _is_meaningful_acquisition(incoming, receiving_team_id, roster):
 
 
 def _analyze_fit(incoming, receiving_team_id, roster):
-    """
-    Return a concise fit assessment string comparing the incoming player
-    to the current best at that position on the receiving team.
-    """
-    position = incoming.get("position", "")
-    in_ovr   = incoming.get("overall") or 70
-    in_age   = incoming.get("age")
-    in_attrs = incoming.get("attributes", {})
-    in_traj  = incoming.get("development_trajectory", "normal")
-
+    position  = incoming.get("position", "")
+    in_ovr    = incoming.get("overall") or 70
+    in_age    = incoming.get("age")
+    in_attrs  = incoming.get("attributes", {})
+    in_traj   = incoming.get("development_trajectory", "normal")
     current   = _get_best_at_position(roster, receiving_team_id, position)
     key_attrs = KEY_ATTRIBUTES.get(position, [])
     parts     = []
@@ -183,7 +171,6 @@ def _analyze_fit(incoming, receiving_team_id, roster):
         else:
             parts.append(f"OVR -{abs(ovr_delta)} ({cur_ovr} → {in_ovr})")
 
-        # Top 2 notable attribute deltas
         attr_deltas = []
         for attr in key_attrs:
             in_val  = in_attrs.get(attr)
@@ -193,7 +180,6 @@ def _analyze_fit(incoming, receiving_team_id, roster):
                 if abs(delta) >= ATTR_NOTABLE_DELTA:
                     sign = "+" if delta > 0 else ""
                     attr_deltas.append((abs(delta), f"{attr.replace('_', ' ')} {sign}{delta}"))
-
         attr_deltas.sort(reverse=True)
         if attr_deltas:
             parts.append("attrs: " + ", ".join(d[1] for d in attr_deltas[:2]))
@@ -210,10 +196,8 @@ def _auto_protected_ids(team_id, season_id):
     roster = load_roster(season_id)
     if not roster:
         return set()
-
-    players = roster.get("teams", {}).get(team_id, {}).get("players", [])
+    players           = roster.get("teams", {}).get(team_id, {}).get("players", [])
     best_per_position = {}
-
     for p in players:
         pos = p.get("position")
         ovr = p.get("overall") or 0
@@ -221,11 +205,14 @@ def _auto_protected_ids(team_id, season_id):
             continue
         if pos not in best_per_position or ovr > best_per_position[pos].get("overall", 0):
             best_per_position[pos] = p
-
     return {p.get("player_id") for p in best_per_position.values()}
 
 
 def get_available_players(team_id, season_id, position_group, gm_settings=None):
+    """
+    Get tradeable players at a position group.
+    Excludes: untouchable, do-not-trade, auto-protected, and injured players.
+    """
     roster = load_roster(season_id)
     if not roster:
         return []
@@ -249,6 +236,8 @@ def get_available_players(team_id, season_id, position_group, gm_settings=None):
         and p.get("player_id") not in do_not_trade
         and p.get("player_id") not in auto_protected
         and p.get("overall") is not None
+        and not p.get("injury", {}).get("active")      # exclude injured players
+        and p.get("active", True)                       # exclude career-injured (inactive)
     ]
 
     available.sort(key=lambda p: p.get("overall") or 0, reverse=True)
@@ -266,13 +255,9 @@ def _build_return_package(team_a, team_b, target_value, season_id, standings, gm
         a_players = get_available_players(team_a, season_id, group_name, gm_settings)
         if not a_players:
             continue
-
         offer = a_players[0]
-
-        # Skip if this player isn't a meaningful acquisition for Team B
         if not _is_meaningful_acquisition(offer, team_b, roster):
             continue
-
         offer_value   = player_value(offer, standings, team_a)
         diff          = abs(offer_value - target_value) / max(target_value, 1)
         offer_surplus = (offer_value - target_value) / max(target_value, 1)
@@ -287,7 +272,6 @@ def _build_return_package(team_a, team_b, target_value, season_id, standings, gm
                 "value":          offer_value,
             }
 
-    # Try picks
     slot   = estimate_draft_slot(team_a, standings)
     r1_val = pick_value(1, slot=slot)
     r2_val = pick_value(2)
@@ -305,8 +289,7 @@ def _build_return_package(team_a, team_b, target_value, season_id, standings, gm
     ]
 
     for picks, combo_val in combos:
-        diff = abs(combo_val - target_value) / max(target_value, 1)
-        if diff <= FAIR_TRADE_TOLERANCE:
+        if abs(combo_val - target_value) / max(target_value, 1) <= FAIR_TRADE_TOLERANCE:
             return {
                 "players":        [],
                 "player_names":   [],
@@ -350,7 +333,6 @@ def _build_rationale_b(team_b, return_pkg, season_id, standings, roster):
         need_str = ""
         if group and group == top_need and top_score >= 0.30:
             need_str = f" — fills {group} need ({top_score:.2f})"
-
         parts.append(
             f"{abbr_b} receives {detail.get('name')} "
             f"({pos}, OVR {detail.get('overall')}){need_str}: {fit}"
@@ -402,8 +384,6 @@ def generate_trade_proposals(season_id, games, standings, week, gm_settings=None
                 continue
 
             target = b_available[0]
-
-            # Only propose if this player is a meaningful acquisition for Team A
             if not _is_meaningful_acquisition(target, team_a, roster):
                 continue
 
@@ -493,14 +473,12 @@ def _generate_pick_proposals(season_id, games, standings, week, gm_settings, see
             if not b_available:
                 continue
 
-            target     = b_available[0]
-
+            target = b_available[0]
             if not _is_meaningful_acquisition(target, team_a, roster):
                 continue
 
             target_val = player_value(target, standings, team_b)
-            diff       = abs(pick_val - target_val) / max(target_val, 1)
-            if diff > 0.25:
+            if abs(pick_val - target_val) / max(target_val, 1) > 0.25:
                 continue
 
             abbr_a = config.ABBR.get(team_a, team_a.upper())
