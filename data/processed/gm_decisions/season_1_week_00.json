@@ -1,0 +1,201 @@
+{
+  "season_id": 1,
+  "week": 0,
+  "timestamp": "2026-05-13T12:45:36.412093+00:00",
+  "trade_proposals": [
+    {
+      "type": "player_trade",
+      "week": 0,
+      "season": 1,
+      "team_a": "jax",
+      "team_b": "nyg",
+      "team_a_receives": {
+        "players": [
+          "amani_toomer_0001"
+        ],
+        "player_names": [
+          "Amani Toomer"
+        ],
+        "player_details": [
+          {
+            "player_id": "amani_toomer_0001",
+            "name": "Amani Toomer",
+            "position": "WR",
+            "overall": 83,
+            "age": null
+          }
+        ],
+        "player_fit": [
+          "OVR upgrade +5 (78 \u2192 83) | attrs: catching +6"
+        ],
+        "picks": [],
+        "value": 87.2
+      },
+      "team_b_receives": {
+        "players": [
+          "fred_taylor_0001"
+        ],
+        "player_names": [
+          "Fred Taylor"
+        ],
+        "player_details": [
+          {
+            "player_id": "fred_taylor_0001",
+            "name": "Fred Taylor",
+            "position": "HB",
+            "overall": 89,
+            "age": null
+          }
+        ],
+        "player_fit": [
+          "OVR upgrade +6 (83 \u2192 89) | attrs: elusiveness +13, trucking -12"
+        ],
+        "picks": [],
+        "value": 93.5
+      },
+      "need_score": 0.606,
+      "position_group": "WR_TE",
+      "rationale_a": "JAX addresses WR_TE need (0.61) \u2014 Amani Toomer (WR, OVR 83): OVR upgrade +5 (78 \u2192 83) | attrs: catching +6",
+      "rationale_b": "NYG receives Fred Taylor (HB, OVR 89) \u2014 fills RB need (0.41): OVR upgrade +6 (83 \u2192 89) | attrs: elusiveness +13, trucking -12",
+      "rationale": "JAX targets Amani Toomer (WR, OVR 83)"
+    },
+    {
+      "type": "player_trade",
+      "week": 0,
+      "season": 1,
+      "team_a": "min",
+      "team_b": "den",
+      "team_a_receives": {
+        "players": [
+          "rod_smith_0001"
+        ],
+        "player_names": [
+          "Rod Smith"
+        ],
+        "player_details": [
+          {
+            "player_id": "rod_smith_0001",
+            "name": "Rod Smith",
+            "position": "WR",
+            "overall": 83,
+            "age": null
+          }
+        ],
+        "player_fit": [
+          "OVR upgrade +5 (78 \u2192 83) | attrs: speed -5"
+        ],
+        "picks": [],
+        "value": 87.2
+      },
+      "team_b_receives": {
+        "players": [
+          "pat_williams_0001"
+        ],
+        "player_names": [
+          "Pat Williams"
+        ],
+        "player_details": [
+          {
+            "player_id": "pat_williams_0001",
+            "name": "Pat Williams",
+            "position": "DT",
+            "overall": 90,
+            "age": null
+          }
+        ],
+        "player_fit": [
+          "OVR upgrade +6 (84 \u2192 90)"
+        ],
+        "picks": [],
+        "value": 94.5
+      },
+      "need_score": 0.957,
+      "position_group": "WR_TE",
+      "rationale_a": "MIN addresses WR_TE need (0.96) \u2014 Rod Smith (WR, OVR 83): OVR upgrade +5 (78 \u2192 83) | attrs: speed -5",
+      "rationale_b": "DEN receives Pat Williams (DT, OVR 90) \u2014 fills DL need (0.41): OVR upgrade +6 (84 \u2192 90)",
+      "rationale": "MIN targets Rod Smith (WR, OVR 83)"
+    },
+    {
+      "type": "player_trade",
+      "week": 0,
+      "season": 1,
+      "team_a": "min",
+      "team_b": "nyg",
+      "team_a_receives": {
+        "players": [
+          "amani_toomer_0001"
+        ],
+        "player_names": [
+          "Amani Toomer"
+        ],
+        "player_details": [
+          {
+            "player_id": "amani_toomer_0001",
+            "name": "Amani Toomer",
+            "position": "WR",
+            "overall": 83,
+            "age": null
+          }
+        ],
+        "player_fit": [
+          "OVR upgrade +5 (78 \u2192 83)"
+        ],
+        "picks": [],
+        "value": 87.2
+      },
+      "team_b_receives": {
+        "players": [
+          "adrian_peterson_0002"
+        ],
+        "player_names": [
+          "Adrian Peterson"
+        ],
+        "player_details": [
+          {
+            "player_id": "adrian_peterson_0002",
+            "name": "Adrian Peterson",
+            "position": "HB",
+            "overall": 85,
+            "age": null
+          }
+        ],
+        "player_fit": [
+          "OVR comparable (83 \u2192 85) | attrs: elusiveness +14, trucking -13"
+        ],
+        "picks": [],
+        "value": 89.2
+      },
+      "need_score": 0.957,
+      "position_group": "WR_TE",
+      "rationale_a": "MIN addresses WR_TE need (0.96) \u2014 Amani Toomer (WR, OVR 83): OVR upgrade +5 (78 \u2192 83)",
+      "rationale_b": "NYG receives Adrian Peterson (HB, OVR 85) \u2014 fills RB need (0.41): OVR comparable (83 \u2192 85) | attrs: elusiveness +14, trucking -13",
+      "rationale": "MIN targets Amani Toomer (WR, OVR 83)"
+    }
+  ],
+  "depth_chart_flags": {
+    "no": [
+      {
+        "position": "HB",
+        "current_starter": {
+          "player_id": "deuce_mcallister_0001",
+          "name": "Deuce McAllister",
+          "overall": 89,
+          "age": 30,
+          "scheme_fit": 0.805
+        },
+        "recommended": {
+          "player_id": "reggie_bush_0001",
+          "name": "Reggie Bush",
+          "overall": 89,
+          "age": 27,
+          "trajectory": "normal",
+          "scheme_fit": 0.985
+        },
+        "reasons": [
+          "Better scheme fit (0.98 vs 0.81), 0 OVR gap"
+        ],
+        "priority": "medium"
+      }
+    ]
+  }
+}

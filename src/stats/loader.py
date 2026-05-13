@@ -76,3 +76,25 @@ def get_team_coach(season_id, team_id):
         if season_data.get("team") == team_id:
             return coach
     return None
+
+def team_label_for_season(player, season_id):
+    """
+    Returns the team display string for a player in a given season.
+    Single team all season: 'BUF'
+    Traded mid-season:      'BUF-MIN'
+    """
+    history = player.get("trade_history", [])
+    season_moves = sorted(
+        [h for h in history if str(h.get("season")) == str(season_id)],
+        key=lambda h: h.get("week", 0)
+    )
+
+    if not season_moves:
+        return config.ABBR.get(player.get("team_id", ""), "???")
+
+    teams = [season_moves[0]["from_team"]]
+    for move in season_moves:
+        if move["to_team"] not in teams:
+            teams.append(move["to_team"])
+
+    return "-".join(config.ABBR.get(t, t.upper()) for t in teams)
