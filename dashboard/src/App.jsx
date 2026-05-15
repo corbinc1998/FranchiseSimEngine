@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { api } from './api'
-import Predictions  from './views/Predictions'
-import WeeklyGames  from './views/WeeklyGames'
-import Standings    from './views/Standings'
-import Trades       from './views/Trades'
-import RosterMoves  from './views/RosterMoves'
+import Predictions from './views/Predictions'
+import WeeklyGames from './views/WeeklyGames'
+import Standings   from './views/Standings'
+import Trades      from './views/Trades'
+import RosterMoves from './views/RosterMoves'
+import BotControl  from './views/BotControl'
 
 const VIEWS = [
   { id: 'predictions', label: 'Predictions',  icon: '◈' },
@@ -12,6 +13,7 @@ const VIEWS = [
   { id: 'standings',   label: 'Standings',    icon: '≡' },
   { id: 'trades',      label: 'Trades',       icon: '⇄' },
   { id: 'roster',      label: 'Roster Moves', icon: '✦' },
+  { id: 'bot',         label: 'Bot',          icon: '⚡' },
 ]
 
 export default function App() {
@@ -19,6 +21,7 @@ export default function App() {
   const [season,  setSeason]  = useState(null)
   const [seasons, setSeasons] = useState([])
   const [cfgData, setCfgData] = useState(null)
+  const [botRunning, setBotRunning] = useState(false)
 
   useEffect(() => {
     Promise.all([api.config(), api.seasons()])
@@ -28,6 +31,20 @@ export default function App() {
         setSeason(s.current || s.seasons?.[s.seasons.length - 1])
       })
       .catch(console.error)
+  }, [])
+
+  // Poll bot status for the nav indicator
+  useEffect(() => {
+    async function checkBot() {
+      try {
+        const res  = await fetch('/api/bot/status')
+        const data = await res.json()
+        setBotRunning(data.running || false)
+      } catch {}
+    }
+    checkBot()
+    const interval = setInterval(checkBot, 3000)
+    return () => clearInterval(interval)
   }, [])
 
   const sharedProps = { season, cfgData }
@@ -49,6 +66,18 @@ export default function App() {
             >
               <span className="nav-icon">{v.icon}</span>
               {v.label}
+              {/* Bot running indicator */}
+              {v.id === 'bot' && botRunning && (
+                <span style={{
+                  marginLeft: 'auto',
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: 'var(--green)',
+                  boxShadow: '0 0 5px var(--green)',
+                  flexShrink: 0,
+                }} />
+              )}
             </div>
           ))}
         </nav>
@@ -94,6 +123,7 @@ export default function App() {
             {view === 'standings'   && <Standings    {...sharedProps} />}
             {view === 'trades'      && <Trades       {...sharedProps} />}
             {view === 'roster'      && <RosterMoves  {...sharedProps} />}
+            {view === 'bot'         && <BotControl />}
           </>
         )}
       </main>

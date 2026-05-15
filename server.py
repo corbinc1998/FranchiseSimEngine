@@ -10,6 +10,10 @@ Run from repo root:
 import os
 import sys
 import json
+import subprocess
+import threading
+import collections
+import time
 from pathlib import Path
 from typing import Optional
 
@@ -37,6 +41,42 @@ app.add_middleware(
 logos_dir = os.path.join(os.path.dirname(__file__), "logos")
 if os.path.exists(logos_dir):
     app.mount("/logos", StaticFiles(directory=logos_dir), name="logos")
+
+
+# ── Bot state ─────────────────────────────────────────────────────────────────
+
+BOT_DIR     = os.path.join(os.path.dirname(__file__), "bot")
+BOT_SCRIPT  = os.path.join(BOT_DIR, "madden_bot.py")
+LOG_MAXLEN  = 200  # keep last 200 log lines
+
+_bot_process  = None
+_bot_log      = collections.deque(maxlen=LOG_MAXLEN)
+_bot_lock     = threading.Lock()
+_bot_started_at = None
+_games_played = 0
+
+
+def _read_bot_output(proc):
+    """Background thread — reads bot stdout and appends to log."""
+    global _games_played
+    for line in iter(proc.stdout.readline, ''):
+        line = line.rstrip()
+        if not line:
+            continue
+        timestamp = time.strftime("%H:%M:%S")
+        entry = {"t": timestamp, "msg": line}
+        with _bot_lock:
+            _bot_log.append(entry)
+            # Count completed games from log
+            if "Menu sequence complete" in line or "Restarting timer" in line:
+                _games_played += 1
+
+
+def _is_bot_running():
+    global _bot_process
+    if _bot_process is None:
+        return False
+    return _bot_process.poll() is None
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -71,6 +111,145 @@ def get_config():
     }
 
 
+# ── Bot control ───────────────────────────────────────────────────────────────
+
+@app.get("/api/bot/status")
+def bot_status():
+    global _bot_started_at, _games_played
+    running = _is_bot_running()
+
+    uptime_secs = None
+    if running and _bot_started_at:
+        uptime_secs = int(time.time() - _bot_started_at)
+
+    with _bot_lock:
+        log_lines = list(_bot_log)
+
+    return {
+        "running":      running,
+        "pid":          _bot_process.pid if running and _bot_process else None,
+        "uptime_secs":  uptime_secs,
+        "games_played": _games_played,
+        "log":          log_lines[-50:],  # last 50 lines
+        "bot_script":   BOT_SCRIPT,
+        "bot_exists":   os.path.exists(BOT_SCRIPT),
+    }
+
+
+@app.post("/api/bot/start")
+def bot_start():
+    global _bot_process, _bot_started_at, _games_played, _bot_log
+
+    if _is_bot_running():
+        return {"success": False, "message": "Bot is already running"}
+
+    if not os.path.exists(BOT_SCRIPT):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Bot script not found at {BOT_SCRIPT}. Make sure bot/madden_bot.py exists."
+        )
+
+    try:
+        # Clear log and reset counters
+        with _bot_lock:
+            _bot_log.clear()
+        _games_played   = 0
+        _bot_started_at = time.time()
+
+        _bot_process = subprocess.Popen(
+            [sys.executable, BOT_SCRIPT],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            stdin=subprocess.PIPE,
+            text=True,
+            bufsize=1,
+            cwd=BOT_DIR,
+        )
+
+        # Start background reader thread
+        reader = threading.Thread(
+            target=_read_bot_output,
+            args=(_bot_process,),
+            daemon=True
+        )
+        reader.start()
+
+        return {
+            "success": True,
+            "pid":     _bot_process.pid,
+            "message": f"Bot started (PID {_bot_process.pid})"
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/bot/stop")
+def bot_stop():
+    global _bot_process
+
+    if not _is_bot_running():
+        return {"success": False, "message": "Bot is not running"}
+
+    try:
+        # Send quit command via stdin first (graceful)
+        try:
+            _bot_process.stdin.write("quit\n")
+            _bot_process.stdin.flush()
+            _bot_process.wait(timeout=5)
+        except Exception:
+            pass
+
+        # Force kill if still running
+        if _is_bot_running():
+            _bot_process.terminate()
+            _bot_process.wait(timeout=3)
+
+        with _bot_lock:
+            _bot_log.append({"t": time.strftime("%H:%M:%S"), "msg": "[DASHBOARD] Bot stopped."})
+
+        return {"success": True, "message": "Bot stopped"}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class BotCommandRequest(BaseModel):
+    command: str
+
+
+@app.post("/api/bot/command")
+def bot_command(req: BotCommandRequest):
+    """Send a command to the running bot via stdin."""
+    if not _is_bot_running():
+        return {"success": False, "message": "Bot is not running"}
+
+    allowed = {"game end", "status", "capture", "windows"}
+    if req.command.lower() not in allowed:
+        raise HTTPException(status_code=400, detail=f"Unknown command. Allowed: {allowed}")
+
+    try:
+        _bot_process.stdin.write(req.command + "\n")
+        _bot_process.stdin.flush()
+        with _bot_lock:
+            _bot_log.append({
+                "t":   time.strftime("%H:%M:%S"),
+                "msg": f"[DASHBOARD] Sent command: {req.command}"
+            })
+        return {"success": True, "command": req.command}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/bot/log")
+def bot_log(since: int = 0):
+    """Return log lines. `since` = number of lines already seen (for polling)."""
+    with _bot_lock:
+        all_lines = list(_bot_log)
+    new_lines = all_lines[since:]
+    return {"lines": new_lines, "total": len(all_lines)}
+
+
 # ── Predictions ───────────────────────────────────────────────────────────────
 
 @app.get("/api/predictions/{season_id}")
@@ -93,39 +272,28 @@ def get_all_predictions(season_id: int):
 
 @app.get("/api/weeks/{season_id}")
 def get_season_weeks(season_id: int):
-    """Return list of available weeks for a season."""
-    games   = load_games()
-    season  = _season_games(games, season_id)
-    weeks   = sorted(set(g.get("week") for g in season if g.get("week") and not g.get("isPlayoff")))
-    played  = sorted(set(g.get("week") for g in season if g.get("completed") and not g.get("isPlayoff")))
+    games  = load_games()
+    season = _season_games(games, season_id)
+    weeks  = sorted(set(g.get("week") for g in season if g.get("week") and not g.get("isPlayoff")))
+    played = sorted(set(g.get("week") for g in season if g.get("completed") and not g.get("isPlayoff")))
     return {"weeks": weeks, "weeks_played": played, "current_week": max(played) if played else None}
 
 
 @app.get("/api/weeks/{season_id}/{week}")
 def get_week_summary(season_id: int, week: int):
-    """
-    Returns each game for the week with:
-    - Scheduled matchup
-    - Latest prediction (winner, win prob, predicted scores)
-    - Actual result if completed
-    - Whether prediction was correct
-    - Score accuracy
-    """
     games      = load_games()
     season_all = _season_games(games, season_id)
     week_games = [g for g in season_all if g.get("week") == week and not g.get("isPlayoff")]
 
-    # Get latest prediction run — build a lookup by game_id
     runs = _load_predictions_log()
     season_runs = [r for r in runs if str(r.get("season_id", "")) == str(season_id)]
 
-    # Build prediction lookup: game_id → prediction dict from latest run that has it
     pred_by_game = {}
     for run in season_runs:
         for pred in run.get("predictions", []):
             gid = pred.get("id") or pred.get("game_id")
             if gid:
-                pred_by_game[gid] = pred  # later runs overwrite earlier ones
+                pred_by_game[gid] = pred
 
     results = []
     for game in week_games:
@@ -135,69 +303,58 @@ def get_week_summary(season_id: int, week: int):
         home_id = game.get("homeTeamId")
         away_id = game.get("awayTeamId")
 
-        # Actual result
-        completed       = game.get("completed", False)
-        actual_home     = game.get("homeScore")
-        actual_away     = game.get("awayScore")
-        actual_winner   = None
+        completed     = game.get("completed", False)
+        actual_home   = game.get("homeScore")
+        actual_away   = game.get("awayScore")
+        actual_winner = None
         if completed and actual_home is not None and actual_away is not None:
             actual_winner = home_id if actual_home > actual_away else away_id
 
-        # Prediction
         pred_winner     = pred.get("predicted_winner") or pred.get("winner")
         home_win_prob   = pred.get("home_win_prob")
         away_win_prob   = pred.get("away_win_prob")
         pred_home_score = pred.get("predicted_home_score")
         pred_away_score = pred.get("predicted_away_score")
-        confidence      = pred.get("confidence")
 
-        # Prediction correct?
         prediction_correct = None
         if completed and actual_winner and pred_winner:
             prediction_correct = pred_winner == actual_winner
 
-        # Score accuracy — how close were predicted scores?
-        home_score_diff = None
-        away_score_diff = None
-        if completed and actual_home is not None and pred_home_score is not None:
-            home_score_diff = abs(actual_home - pred_home_score)
-        if completed and actual_away is not None and pred_away_score is not None:
-            away_score_diff = abs(actual_away - pred_away_score)
+        home_score_diff = abs(actual_home - pred_home_score) if (completed and actual_home is not None and pred_home_score is not None) else None
+        away_score_diff = abs(actual_away - pred_away_score) if (completed and actual_away is not None and pred_away_score is not None) else None
 
         results.append({
-            "game_id":            gid,
-            "home_team":          home_id,
-            "away_team":          away_id,
-            "completed":          completed,
-            "actual_home_score":  actual_home,
-            "actual_away_score":  actual_away,
-            "actual_winner":      actual_winner,
-            "predicted_winner":   pred_winner,
-            "home_win_prob":      home_win_prob,
-            "away_win_prob":      away_win_prob,
+            "game_id":              gid,
+            "home_team":            home_id,
+            "away_team":            away_id,
+            "completed":            completed,
+            "actual_home_score":    actual_home,
+            "actual_away_score":    actual_away,
+            "actual_winner":        actual_winner,
+            "predicted_winner":     pred_winner,
+            "home_win_prob":        home_win_prob,
+            "away_win_prob":        away_win_prob,
             "predicted_home_score": pred_home_score,
             "predicted_away_score": pred_away_score,
-            "confidence":         confidence,
-            "prediction_correct": prediction_correct,
-            "home_score_diff":    home_score_diff,
-            "away_score_diff":    away_score_diff,
+            "prediction_correct":   prediction_correct,
+            "home_score_diff":      home_score_diff,
+            "away_score_diff":      away_score_diff,
         })
 
-    # Week accuracy summary
     completed_with_pred = [g for g in results if g["prediction_correct"] is not None]
     correct             = sum(1 for g in completed_with_pred if g["prediction_correct"])
     accuracy            = round(correct / len(completed_with_pred), 3) if completed_with_pred else None
 
     return {
-        "season":   season_id,
-        "week":     week,
-        "games":    results,
+        "season": season_id,
+        "week":   week,
+        "games":  results,
         "summary": {
-            "total":     len(results),
-            "completed": len([g for g in results if g["completed"]]),
-            "correct":   correct,
+            "total":           len(results),
+            "completed":       len([g for g in results if g["completed"]]),
+            "correct":         correct,
             "total_predicted": len(completed_with_pred),
-            "accuracy":  accuracy,
+            "accuracy":        accuracy,
         }
     }
 
@@ -272,8 +429,7 @@ def get_gm_by_week(season_id: int, week: int):
 
 @app.get("/api/injuries/{season_id}")
 def get_injuries(season_id: int):
-    injuries = get_all_injuries(season_id)
-    return {"injuries": injuries, "count": len(injuries)}
+    return {"injuries": get_all_injuries(season_id), "count": len(get_all_injuries(season_id))}
 
 
 # ── Roster ────────────────────────────────────────────────────────────────────
@@ -286,14 +442,7 @@ def get_team_roster(season_id: int, team_id: str):
     team_data = roster.get("teams", {}).get(team_id)
     if not team_data:
         raise HTTPException(status_code=404, detail=f"No roster data for {team_id}")
-    return {
-        "team_id":  team_id,
-        "season":   season_id,
-        "overall":  team_data.get("overall"),
-        "playbook": team_data.get("playbook"),
-        "cap":      team_data.get("cap"),
-        "players":  team_data.get("players", []),
-    }
+    return {"team_id": team_id, "season": season_id, **team_data}
 
 
 # ── Transactions ──────────────────────────────────────────────────────────────
@@ -320,13 +469,9 @@ class TradeExecuteRequest(BaseModel):
 def execute_trade(req: TradeExecuteRequest):
     try:
         from tools.execute_trade import (
-            load_roster as et_load,
-            save_roster as et_save,
-            load_transactions,
-            save_transactions,
-            load_pick_ledger,
-            save_pick_ledger,
-            execute_proposal,
+            load_roster as et_load, save_roster as et_save,
+            load_transactions, save_transactions,
+            load_pick_ledger, save_pick_ledger, execute_proposal,
         )
     except ImportError as e:
         raise HTTPException(status_code=500, detail=f"Import error: {e}")
@@ -341,17 +486,6 @@ def execute_trade(req: TradeExecuteRequest):
         return {"success": True, "trade_id": trade_id}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-# ── Pick ledger ───────────────────────────────────────────────────────────────
-
-@app.get("/api/picks/ledger")
-def get_pick_ledger():
-    path = os.path.join(config.DRAFT_DIR, "draft_pick_ledger.json")
-    if not os.path.exists(path):
-        return {"trades": []}
-    with open(path) as f:
-        return json.load(f)
 
 
 # ── Seasons ───────────────────────────────────────────────────────────────────
