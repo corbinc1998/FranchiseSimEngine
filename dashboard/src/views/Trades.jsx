@@ -133,7 +133,7 @@ function TradeCard({ proposal, cfgData, onApprove, onSkip, executed, skipped }) 
                 fontFamily: 'var(--mono)', fontSize: 12,
                 color: pk.future ? 'var(--amber)' : 'var(--text-dim)',
               }}>
-                {pk.future ? '🔮 Future ' : ''}S{pk.season} R{pk.round} pick (val {pk.value?.toFixed(0)})
+                {pk.future ? '🔮 Future ' : ''}{pk.round === 1 ? '1st' : pk.round === 2 ? '2nd' : pk.round === 3 ? '3rd' : pk.round + 'th'} Round Pick{pk.slot ? ' (slot ' + pk.slot + ')' : ''}
               </div>
             ))}
             <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-dim)', marginTop: 6 }}>
@@ -167,7 +167,7 @@ function TradeCard({ proposal, cfgData, onApprove, onSkip, executed, skipped }) 
                 fontFamily: 'var(--mono)', fontSize: 12,
                 color: pk.future ? 'var(--amber)' : 'var(--text-dim)',
               }}>
-                {pk.future ? '🔮 Future ' : ''}S{pk.season} R{pk.round} pick (val {pk.value?.toFixed(0)})
+                {pk.future ? '🔮 Future ' : ''}{pk.round === 1 ? '1st' : pk.round === 2 ? '2nd' : pk.round === 3 ? '3rd' : pk.round + 'th'} Round Pick{pk.slot ? ' (slot ' + pk.slot + ')' : ''}
               </div>
             ))}
             <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-dim)', marginTop: 6 }}>
