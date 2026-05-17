@@ -6,15 +6,18 @@ function TradeCard({ proposal, cfgData, onApprove, onSkip, executed, skipped }) 
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState(null)
 
-  const abbr     = cfgData?.abbr || {}
-  const teamA    = proposal.team_a
-  const teamB    = proposal.team_b
-  const receives = proposal.team_a_receives || {}
-  const sends    = proposal.team_b_receives || {}
+  const abbr        = cfgData?.abbr || {}
+  const teamA       = proposal.team_a
+  const teamB       = proposal.team_b
+  const receives    = proposal.team_a_receives || {}
+  const sends       = proposal.team_b_receives || {}
   const recvPlayers = receives.player_details || []
-  const sendPlayers = sends.player_details || []
-  const recvPicks   = receives.picks || []
-  const sendPicks   = sends.picks || []
+  const sendPlayers = sends.player_details    || []
+  const recvPicks   = receives.picks          || []
+  const sendPicks   = sends.picks             || []
+
+  const isBlockbuster = proposal.blockbuster === true
+  const isQB          = proposal.type === 'qb_targeted_trade' || proposal.position_group === 'QB'
 
   async function handleApprove() {
     setLoading(true)
@@ -34,10 +37,49 @@ function TradeCard({ proposal, cfgData, onApprove, onSkip, executed, skipped }) 
     <div className="card" style={{
       marginBottom: 12,
       opacity: isDone || skipped ? 0.5 : 1,
-      borderColor: isDone ? 'rgba(52,211,153,0.3)' : 'var(--border)',
+      borderColor: isBlockbuster
+        ? 'rgba(251,191,36,0.55)'
+        : isDone
+          ? 'rgba(52,211,153,0.3)'
+          : 'var(--border)',
+      boxShadow: isBlockbuster && !isDone && !skipped
+        ? '0 0 18px rgba(251,191,36,0.12)'
+        : 'none',
     }}>
       <div className="card-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          {isBlockbuster && (
+            <span style={{
+              background: 'rgba(251,191,36,0.15)',
+              border: '1px solid rgba(251,191,36,0.5)',
+              color: '#fbbf24',
+              fontFamily: 'var(--display)',
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.10em',
+              padding: '2px 7px',
+              borderRadius: 4,
+              textTransform: 'uppercase',
+            }}>
+              Blockbuster
+            </span>
+          )}
+          {isQB && (
+            <span style={{
+              background: 'rgba(99,102,241,0.15)',
+              border: '1px solid rgba(99,102,241,0.4)',
+              color: '#a5b4fc',
+              fontFamily: 'var(--display)',
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.10em',
+              padding: '2px 7px',
+              borderRadius: 4,
+              textTransform: 'uppercase',
+            }}>
+              QB Trade
+            </span>
+          )}
           <span className="chip chip-dim" style={{ fontSize: 10 }}>
             {proposal.position_group || proposal.type}
           </span>
@@ -47,6 +89,7 @@ function TradeCard({ proposal, cfgData, onApprove, onSkip, executed, skipped }) 
             </span>
           )}
         </div>
+
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {isDone  && <span className="chip chip-green">Executed</span>}
           {skipped && <span className="chip chip-dim">Skipped</span>}
@@ -86,8 +129,11 @@ function TradeCard({ proposal, cfgData, onApprove, onSkip, executed, skipped }) 
               </div>
             ))}
             {recvPicks.map((pk, i) => (
-              <div key={i} style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>
-                {pk.future ? 'Future ' : ''}S{pk.season} R{pk.round} pick (val {pk.value?.toFixed(0)})
+              <div key={i} style={{
+                fontFamily: 'var(--mono)', fontSize: 12,
+                color: pk.future ? 'var(--amber)' : 'var(--text-dim)',
+              }}>
+                {pk.future ? '🔮 Future ' : ''}S{pk.season} R{pk.round} pick (val {pk.value?.toFixed(0)})
               </div>
             ))}
             <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-dim)', marginTop: 6 }}>
@@ -117,8 +163,11 @@ function TradeCard({ proposal, cfgData, onApprove, onSkip, executed, skipped }) 
               </div>
             ))}
             {sendPicks.map((pk, i) => (
-              <div key={i} style={{ fontFamily: 'var(--mono)', fontSize: 12, color: 'var(--text-dim)' }}>
-                {pk.future ? 'Future ' : ''}S{pk.season} R{pk.round} pick (val {pk.value?.toFixed(0)})
+              <div key={i} style={{
+                fontFamily: 'var(--mono)', fontSize: 12,
+                color: pk.future ? 'var(--amber)' : 'var(--text-dim)',
+              }}>
+                {pk.future ? '🔮 Future ' : ''}S{pk.season} R{pk.round} pick (val {pk.value?.toFixed(0)})
               </div>
             ))}
             <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--text-dim)', marginTop: 6 }}>
@@ -162,6 +211,7 @@ export default function Trades({ season, cfgData }) {
   const [executed, setExecuted] = useState(new Set())
   const [skipped,  setSkipped]  = useState(new Set())
   const [tab,      setTab]      = useState('proposals')
+  const [filter,   setFilter]   = useState('all')
 
   const abbr = cfgData?.abbr || {}
 
@@ -176,9 +226,17 @@ export default function Trades({ season, cfgData }) {
 
   if (loading) return <div className="loading">Loading trade data...</div>
 
-  const proposals = gmData?.decisions?.trade_proposals || []
-  const week      = gmData?.week
-  const trades    = history?.trades || []
+  const proposals   = gmData?.decisions?.trade_proposals || []
+  const week        = gmData?.week
+  const trades      = history?.trades || []
+  const blockbusters = proposals.filter(p => p.blockbuster)
+  const qbTrades    = proposals.filter(p => p.type === 'qb_targeted_trade' || p.position_group === 'QB')
+
+  const filteredProposals = filter === 'blockbuster'
+    ? blockbusters
+    : filter === 'qb'
+      ? qbTrades
+      : proposals
 
   async function handleApprove(proposal) {
     const res = await api.executeTrade(proposal, season, week)
@@ -202,6 +260,7 @@ export default function Trades({ season, cfgData }) {
         <div className="view-sub">
           Season {season}{week ? ` · Week ${week}` : ''}
           {proposals.length > 0 && ` · ${proposals.length} proposal${proposals.length !== 1 ? 's' : ''}`}
+          {blockbusters.length > 0 && ` · ${blockbusters.length} blockbuster${blockbusters.length !== 1 ? 's' : ''}`}
         </div>
       </div>
 
@@ -223,19 +282,50 @@ export default function Trades({ season, cfgData }) {
         </div>
 
         {tab === 'proposals' && (
-          proposals.length === 0
-            ? <div className="empty">No trade proposals this week. Run gm_pipeline.py to generate proposals.</div>
-            : proposals.map((p, i) => (
-                <TradeCard
-                  key={i}
-                  proposal={p}
-                  cfgData={cfgData}
-                  onApprove={handleApprove}
-                  onSkip={handleSkip}
-                  executed={executed.has(p.rationale)}
-                  skipped={skipped.has(p.rationale)}
-                />
-              ))
+          <>
+            {/* Filter bar */}
+            {proposals.length > 0 && (
+              <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
+                {[
+                  { id: 'all',        label: `All (${proposals.length})` },
+                  { id: 'blockbuster',label: `Blockbusters (${blockbusters.length})` },
+                  { id: 'qb',         label: `QB Trades (${qbTrades.length})` },
+                ].map(f => (
+                  <button key={f.id} onClick={() => setFilter(f.id)} style={{
+                    background: filter === f.id ? 'rgba(251,191,36,0.12)' : 'none',
+                    border: `1px solid ${filter === f.id ? 'rgba(251,191,36,0.5)' : 'var(--border)'}`,
+                    borderRadius: 6,
+                    padding: '4px 12px',
+                    fontFamily: 'var(--display)', fontSize: 11, fontWeight: 600,
+                    letterSpacing: '0.06em', textTransform: 'uppercase',
+                    color: filter === f.id ? 'var(--amber)' : 'var(--text-dim)',
+                    cursor: 'pointer',
+                  }}>
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {filteredProposals.length === 0
+              ? <div className="empty">
+                  {proposals.length === 0
+                    ? 'No trade proposals this week. Run gm_pipeline.py to generate proposals.'
+                    : 'No proposals match this filter.'}
+                </div>
+              : filteredProposals.map((p, i) => (
+                  <TradeCard
+                    key={i}
+                    proposal={p}
+                    cfgData={cfgData}
+                    onApprove={handleApprove}
+                    onSkip={handleSkip}
+                    executed={executed.has(p.rationale)}
+                    skipped={skipped.has(p.rationale)}
+                  />
+                ))
+            }
+          </>
         )}
 
         {tab === 'history' && (

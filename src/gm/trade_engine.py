@@ -6,6 +6,12 @@ Trade proposal engine for the AI GM.
 Injured players are excluded from trade proposals on both sides.
 Only meaningful acquisitions (OVR upgrade, youth asset, or attribute
 advantage) are proposed.
+
+QB trade logic:
+    Teams are flagged as QB-needy based on starter OVR, record, and
+    injury situation. Teams are flagged as QB-available based on rebuild
+    status, QB depth, and record vs. talent mismatch.
+    Stats can be injected later via the player_stats parameter.
 """
 
 import sys
@@ -23,7 +29,8 @@ from src.features.ratings import POSITION_GROUPS
 
 PREMIUM_POSITIONS    = {"QB", "LE", "RE"}
 GROUP_TO_POSITIONS   = {g: POSITION_GROUPS[g]["positions"] for g in POSITION_GROUPS}
-FAIR_TRADE_TOLERANCE = 0.20
+FAIR_TRADE_TOLERANCE      = 0.30  # widened — allows more imperfect but realistic deals
+NEED_THRESHOLD_INITIATE_  = 0.20  # override: lower bar to initiate any trade
 
 KEY_ATTRIBUTES = {
     "QB":   ["throw_accuracy", "throw_power", "awareness"],
@@ -52,6 +59,15 @@ KEY_ATTRIBUTES = {
 YOUTH_AGE_THRESHOLD = 24
 HIGH_UPSIDE_OVR_GAP = 10
 ATTR_NOTABLE_DELTA  = 5
+
+# ── QB trade constants ────────────────────────────────────────────────────────
+QB_NEED_THRESHOLD = 85   # starter OVR below this → team is needy (most teams qualify)
+QB_YOUNG_AGE      = 21   # only truly elite prospects exempt (not age 22-23 backups)
+QB_ELITE_OVR      = 79   # OVR at/above → worth trading for
+QB_BACKUP_MIN     = 72   # backup OVR below this → injury situation is urgent
+QB_NEED_MIN       = 0.15 # minimum need score to pursue a QB trade
+QB_AVAIL_MIN      = 0.10 # minimum availability score
+QB_BLOCKBUSTER_OVR = 84  # OVR at/above → propose blockbuster return package
 
 
 # ── Player value ──────────────────────────────────────────────────────────────
@@ -105,10 +121,6 @@ def _get_best_at_position(roster, team_id, position):
 
 
 def _is_meaningful_acquisition(incoming, receiving_team_id, roster):
-    """
-    Return True only if the incoming player is worth acquiring.
-    Blocks proposals where the player is worse with no upside.
-    """
     position = incoming.get("position", "")
     in_ovr   = incoming.get("overall") or 70
     in_age   = incoming.get("age") or 27
@@ -209,10 +221,6 @@ def _auto_protected_ids(team_id, season_id):
 
 
 def get_available_players(team_id, season_id, position_group, gm_settings=None):
-    """
-    Get tradeable players at a position group.
-    Excludes: untouchable, do-not-trade, auto-protected, and injured players.
-    """
     roster = load_roster(season_id)
     if not roster:
         return []
@@ -236,60 +244,382 @@ def get_available_players(team_id, season_id, position_group, gm_settings=None):
         and p.get("player_id") not in do_not_trade
         and p.get("player_id") not in auto_protected
         and p.get("overall") is not None
-        and not p.get("injury", {}).get("active")      # exclude injured players
-        and p.get("active", True)                       # exclude career-injured (inactive)
+        and not p.get("injury", {}).get("active")
+        and p.get("active", True)
     ]
 
     available.sort(key=lambda p: p.get("overall") or 0, reverse=True)
     return available
 
 
+# ── QB situation assessment ───────────────────────────────────────────────────
+
+def _get_qb_roster(team_id, roster):
+    """All active QBs for a team, sorted best → worst."""
+    players = roster.get("teams", {}).get(team_id, {}).get("players", [])
+    return sorted(
+        [p for p in players
+         if p.get("position") == "QB"
+         and p.get("active", True)
+         and p.get("overall")],
+        key=lambda p: p.get("overall", 0),
+        reverse=True,
+    )
+
+
+def _win_pct(team_id, standings):
+    record = standings.get(team_id, {})
+    # Support both "wins"/"losses" and "w"/"l" key formats
+    wins   = record.get("wins") if record.get("wins") is not None else record.get("w", 0)
+    losses = record.get("losses") if record.get("losses") is not None else record.get("l", 0)
+    ties   = record.get("ties") if record.get("ties") is not None else record.get("t", 0)
+    total  = wins + losses + ties
+    return (wins / total if total > 0 else 0.5), wins, losses
+
+
+def qb_need_score(team_id, roster, standings, player_stats=None):
+    """
+    Score 0.0–1.0 for how badly a team needs a better QB.
+
+    Factors:
+        - Starter OVR vs QB_NEED_THRESHOLD (base score)
+        - Losing record with mediocre QB — more urgent
+        - Winning team that could still upgrade — moderate
+        - Injured starter with weak backup — urgent
+
+    player_stats: reserved for future stat-based adjustments, e.g.:
+        poor passer rating / high INT rate despite decent OVR → team wants out
+
+    Returns (score: float, reason: str | None)
+    """
+    qbs     = _get_qb_roster(team_id, roster)
+    starter = qbs[0] if qbs else None
+    backup  = qbs[1] if len(qbs) > 1 else None
+
+    if not starter:
+        return 1.0, "no QB on roster"
+
+    ovr     = starter.get("overall") or 70
+    age     = starter.get("age") or 27
+    traj    = starter.get("development_trajectory") or "normal"
+    injured = starter.get("injury", {}).get("active", False)
+    win_pct, wins, losses = _win_pct(team_id, standings)
+
+    # Young QB with real upside — team is developing him, not desperate
+    if age <= QB_YOUNG_AGE and traj == "high" and ovr >= 65:
+        return 0.0, None
+
+    score = 0.0
+    parts = []
+
+    # Base: OVR deficit
+    if ovr < QB_NEED_THRESHOLD:
+        deficit = QB_NEED_THRESHOLD - ovr
+        score  += min(0.50, deficit / QB_NEED_THRESHOLD)
+        parts.append(f"starter {starter.get('name')} OVR {ovr}")
+
+    # Losing team with mediocre QB — desperate situation
+    if win_pct < 0.40 and ovr < 78:
+        score += 0.25
+        parts.append(f"losing record ({wins}-{losses})")
+
+    # Winning team that could upgrade — lower urgency
+    elif win_pct >= 0.55 and ovr < 78:
+        score += 0.12
+        parts.append(f"contender could upgrade at QB (OVR {ovr})")
+
+    # Injured starter
+    if injured:
+        backup_ovr = backup.get("overall", 60) if backup else 60
+        if backup_ovr < QB_BACKUP_MIN:
+            score += 0.30
+            parts.append(f"starter injured, backup OVR {backup_ovr} — inadequate")
+        else:
+            score += 0.10
+            parts.append(f"starter injured, backup OVR {backup_ovr}")
+
+    # ── Stat injection hook ───────────────────────────────────────────────────
+    # When player_stats is available, layer in performance data:
+    #   recent_rtg = _get_recent_qb_rating(starter.get("player_id"), player_stats)
+    #   if recent_rtg is not None and recent_rtg < 70 and ovr >= QB_NEED_THRESHOLD:
+    #       score += 0.15
+    #       parts.append(f"poor recent passer rating ({recent_rtg:.1f})")
+    # ─────────────────────────────────────────────────────────────────────────
+
+    if score == 0.0:
+        return 0.0, None
+
+    return round(min(1.0, score), 3), " | ".join(parts)
+
+
+def qb_availability_score(team_id, roster, standings, gm_settings=None, player_stats=None):
+    """
+    Score 0.0–1.0 for how likely a team is to trade a QB,
+    and which QB they would move.
+
+    Scenarios:
+        1. Rebuilding team with elite QB — sell high, get picks / youth back
+        2. Losing team with a solid QB that's wasted on a bad roster
+        3. Team with genuine QB depth — backup is movable
+
+    player_stats: reserved for future adjustments, e.g.:
+        declining stats despite decent OVR → team may want to move on
+
+    Returns (score: float, player | None, reason: str | None)
+    """
+    qbs     = _get_qb_roster(team_id, roster)
+    starter = qbs[0] if qbs else None
+    backup  = qbs[1] if len(qbs) > 1 else None
+
+    if not starter:
+        return 0.0, None, None
+
+    ovr     = starter.get("overall") or 70
+    age     = starter.get("age") or 27
+    win_pct, wins, losses = _win_pct(team_id, standings)
+
+    untouchable  = []
+    do_not_trade = []
+    if gm_settings and team_id in gm_settings:
+        s = gm_settings[team_id]
+        untouchable  = s.get("untouchable_players", [])
+        do_not_trade = s.get("do_not_trade_list",   [])
+
+    def movable(p):
+        pid = p.get("player_id")
+        return (
+            pid not in untouchable
+            and pid not in do_not_trade
+            and not p.get("injury", {}).get("active")
+        )
+
+    # Scenario 1: Rebuilding + elite QB → sell high
+    if win_pct < 0.35 and ovr >= QB_ELITE_OVR and movable(starter):
+        return (
+            0.80,
+            starter,
+            f"rebuilding ({wins}-{losses}) with elite QB "
+            f"{starter.get('name')} OVR {ovr} — sell high",
+        )
+
+    # Scenario 1b: Any losing team with a solid QB — asset that could return picks
+    if win_pct < 0.45 and ovr >= QB_ELITE_OVR and movable(starter):
+        return (
+            0.65,
+            starter,
+            f"losing team ({wins}-{losses}) with franchise QB "
+            f"{starter.get('name')} OVR {ovr} — open to offers",
+        )
+
+    # Scenario 2: Underperforming team, QB talent wasted on bad roster
+    if win_pct < 0.50 and ovr >= 78 and movable(starter):
+        return (
+            0.50,
+            starter,
+            f"underperforming ({wins}-{losses}), "
+            f"{starter.get('name')} OVR {ovr} is a tradeable asset",
+        )
+
+    # Scenario 3: Depth at QB — backup is movable
+    if backup and backup.get("overall", 0) >= 70 and movable(backup):
+        b_ovr = backup.get("overall")
+        return (
+            0.45,
+            backup,
+            f"QB depth: {starter.get('name')} OVR {ovr} + "
+            f"{backup.get('name')} OVR {b_ovr} — backup available",
+        )
+
+    # Scenario 4: Winning team with aging QB — sell before decline
+    if win_pct >= 0.55 and age >= 32 and ovr >= 78 and movable(starter):
+        return (
+            0.40,
+            starter,
+            f"winning team ({wins}-{losses}) but {starter.get('name')} "
+            f"age {age} — sell before decline",
+        )
+
+    # Scenario 5: Any team with a tradeable QB (OVR 75+) — open to right offer
+    if ovr >= 75 and movable(starter) and win_pct < 0.55:
+        return (
+            0.30,
+            starter,
+            f"{starter.get('name')} OVR {ovr} — open to the right offer",
+        )
+
+    # ── Stat injection hook ───────────────────────────────────────────────────
+    # Future: declining performance stats → team more open to moving starter
+    # ─────────────────────────────────────────────────────────────────────────
+
+    return 0.0, None, None
+
+
 # ── Return package ────────────────────────────────────────────────────────────
 
-def _build_return_package(team_a, team_b, target_value, season_id, standings, gm_settings, roster):
-    b_needs = assess_team_needs(team_b, season_id, standings)
+def _build_return_package(team_a, team_b, target_value, season_id, standings,
+                          gm_settings, roster, blockbuster=False):
+    """
+    Build the richest return package team_a can offer team_b for a player
+    worth target_value.
 
-    for group_name, need_score in b_needs.get("top_needs", []):
-        if need_score < NEED_THRESHOLD_RESPOND:
-            continue
-        a_players = get_available_players(team_a, season_id, group_name, gm_settings)
-        if not a_players:
-            continue
-        offer = a_players[0]
-        if not _is_meaningful_acquisition(offer, team_b, roster):
-            continue
-        offer_value   = player_value(offer, standings, team_a)
-        diff          = abs(offer_value - target_value) / max(target_value, 1)
-        offer_surplus = (offer_value - target_value) / max(target_value, 1)
-        if diff <= FAIR_TRADE_TOLERANCE and offer_surplus <= 0.10:
-            fit = _analyze_fit(offer, team_b, roster)
-            return {
-                "players":        [offer.get("player_id")],
-                "player_names":   [offer.get("name")],
-                "player_details": [_player_summary(offer)],
-                "player_fit":     [fit],
-                "picks":          [],
-                "value":          offer_value,
-            }
+    Tries in order:
+        1. Single player
+        2. Player + pick(s)
+        3. Two players
+        4. Two players + pick  (blockbuster only)
+        5. Pick combos (1-3 picks, including future picks)
+    """
+    b_needs  = assess_team_needs(team_b, season_id, standings)
+    tolerance = FAIR_TRADE_TOLERANCE
 
     slot   = estimate_draft_slot(team_a, standings)
-    r1_val = pick_value(1, slot=slot)
-    r2_val = pick_value(2)
-    r3_val = pick_value(3)
+    r1_cur = pick_value(1, slot=slot)
+    r1_fut = pick_value(1, slot=16) * 0.85   # future 1st — slight discount
+    r2_cur = pick_value(2)
+    r2_fut = pick_value(2) * 0.85
+    r3_cur = pick_value(3)
 
-    combos = [
+    # ── Collect ALL available players from team_a ────────────────────────────
+    # Cast a wide net — don't filter by team_b's needs at collection time.
+    # This ensures 2-player combo searches have enough candidates.
+    all_candidates = []
+    seen_pids      = set()
+
+    for group in POSITION_GROUPS:
+        for p in get_available_players(team_a, season_id, group, gm_settings):
+            pid = p.get("player_id")
+            if pid in seen_pids:
+                continue
+            seen_pids.add(pid)
+            pval       = player_value(p, standings, team_a)
+            meaningful = _is_meaningful_acquisition(p, team_b, roster)
+            fit        = _analyze_fit(p, team_b, roster) if meaningful else None
+            all_candidates.append((p, pval, fit))
+
+    # Sort by closeness to target value
+    all_candidates.sort(key=lambda x: abs(x[1] - target_value))
+
+    # Players that are genuine upgrades for team_b (used for single-player offers)
+    good = [(p, v, f) for p, v, f in all_candidates if f is not None]
+
+    def _pkg(players, picks, total, is_block):
+        return {
+            "players":        [p.get("player_id") for p in players],
+            "player_names":   [p.get("name")       for p in players],
+            "player_details": [_player_summary(p)  for p in players],
+            "player_fit":     [_analyze_fit(p, team_b, roster) for p in players],
+            "picks":          picks,
+            "value":          round(total, 1),
+            "blockbuster":    is_block,
+        }
+
+    def _close(val):
+        diff    = abs(val - target_value) / max(target_value, 1)
+        surplus = (val - target_value)    / max(target_value, 1)
+        return diff <= tolerance and surplus <= 0.15
+
+    # ── 1. Single player ──────────────────────────────────────────────────────
+    for p, pval, fit in good:
+        if _close(pval):
+            return _pkg([p], [], pval, False)
+
+    # ── 2. Player + pick(s) ───────────────────────────────────────────────────
+    # Use all available players — value match is what matters here
+    pick_add_combos = [
+        ([format_pick(2, "current", team_a)],                                      r2_cur,       False),
+        ([format_pick(3, "current", team_a)],                                      r3_cur,       False),
+        ([format_pick(1, "current", team_a, slot=slot)],                           r1_cur,       True),
+        ([format_pick(1, "future",  team_a)],                                      r1_fut,       True),
+        ([format_pick(2, "current", team_a), format_pick(3, "current", team_a)],  r2_cur+r3_cur, True),
         ([format_pick(1, "current", team_a, slot=slot),
-          format_pick(2, "current", team_a)],
-         r1_val + r2_val),
-        ([format_pick(1, "current", team_a, slot=slot)], r1_val),
-        ([format_pick(2, "current", team_a),
-          format_pick(3, "current", team_a)],
-         r2_val + r3_val),
-        ([format_pick(2, "current", team_a)], r2_val),
+          format_pick(2, "current", team_a)],                                      r1_cur+r2_cur, True),
+        ([format_pick(1, "future",  team_a), format_pick(2, "current", team_a)],  r1_fut+r2_cur, True),
     ]
+    for p, pval, fit in all_candidates[:10]:
+        gap = target_value - pval
+        if gap <= 0:
+            continue
+        for pick_list, pick_val, is_block in pick_add_combos:
+            total = pval + pick_val
+            if _close(total):
+                return {
+                    "players":        [p.get("player_id")],
+                    "player_names":   [p.get("name")],
+                    "player_details": [_player_summary(p)],
+                    "player_fit":     [fit or _analyze_fit(p, team_b, roster)],
+                    "picks":          pick_list,
+                    "value":          round(total, 1),
+                    "blockbuster":    is_block,
+                }
 
-    for picks, combo_val in combos:
-        if abs(combo_val - target_value) / max(target_value, 1) <= FAIR_TRADE_TOLERANCE:
+    # ── 3. Two players ────────────────────────────────────────────────────────
+    # Use all_candidates — at least one player should be meaningful,
+    # the second can be a value-filler
+    pool = all_candidates[:12]
+    for i in range(len(pool)):
+        for j in range(i + 1, len(pool)):
+            p1, v1, f1 = pool[i]
+            p2, v2, f2 = pool[j]
+            if f1 is None and f2 is None:
+                continue   # at least one must be meaningful
+            total = v1 + v2
+            if _close(total):
+                return {
+                    "players":        [p1.get("player_id"), p2.get("player_id")],
+                    "player_names":   [p1.get("name"), p2.get("name")],
+                    "player_details": [_player_summary(p1), _player_summary(p2)],
+                    "player_fit":     [f1 or "depth piece", f2 or "depth piece"],
+                    "picks":          [],
+                    "value":          round(total, 1),
+                    "blockbuster":    True,
+                }
+
+    # ── 4. Two players + pick ─────────────────────────────────────────────────
+    pool_b = all_candidates[:8]
+    for i in range(len(pool_b)):
+        for j in range(i + 1, len(pool_b)):
+            p1, v1, f1 = pool_b[i]
+            p2, v2, f2 = pool_b[j]
+            if f1 is None and f2 is None:
+                continue
+            for pick_list, pick_val in [
+                ([format_pick(3, "current", team_a)], r3_cur),
+                ([format_pick(2, "current", team_a)], r2_cur),
+                ([format_pick(1, "future",  team_a)], r1_fut),
+            ]:
+                total = v1 + v2 + pick_val
+                if _close(total):
+                    return {
+                        "players":        [p1.get("player_id"), p2.get("player_id")],
+                        "player_names":   [p1.get("name"), p2.get("name")],
+                        "player_details": [_player_summary(p1), _player_summary(p2)],
+                        "player_fit":     [f1 or "depth piece", f2 or "depth piece"],
+                        "picks":          pick_list,
+                        "value":          round(total, 1),
+                        "blockbuster":    True,
+                    }
+
+    # ── 5. Pick combos (up to 3 picks, including future) ─────────────────────
+    pick_combos = [
+        ([format_pick(1, "current", team_a, slot=slot),
+          format_pick(1, "future",  team_a)],                                      r1_cur + r1_fut, True),
+        ([format_pick(1, "current", team_a, slot=slot),
+          format_pick(2, "current", team_a)],                                      r1_cur + r2_cur, True),
+        ([format_pick(1, "current", team_a, slot=slot),
+          format_pick(2, "current", team_a),
+          format_pick(3, "current", team_a)],                                      r1_cur+r2_cur+r3_cur, True),
+        ([format_pick(1, "current", team_a, slot=slot)],                           r1_cur,  False),
+        ([format_pick(1, "future",  team_a),
+          format_pick(2, "current", team_a)],                                      r1_fut + r2_cur, True),
+        ([format_pick(1, "future",  team_a)],                                      r1_fut,  False),
+        ([format_pick(2, "current", team_a),
+          format_pick(2, "future",  team_a)],                                      r2_cur + r2_fut, True),
+        ([format_pick(2, "current", team_a),
+          format_pick(3, "current", team_a)],                                      r2_cur + r3_cur, False),
+        ([format_pick(2, "current", team_a)],                                      r2_cur,  False),
+    ]
+    for picks, combo_val, is_block in pick_combos:
+        if _close(combo_val):
             return {
                 "players":        [],
                 "player_names":   [],
@@ -297,6 +627,7 @@ def _build_return_package(team_a, team_b, target_value, season_id, standings, gm
                 "player_fit":     [],
                 "picks":          picks,
                 "value":          round(combo_val, 1),
+                "blockbuster":    is_block,
             }
 
     return None
@@ -348,9 +679,143 @@ def _build_rationale_b(team_b, return_pkg, season_id, standings, roster):
     return " | ".join(parts) if parts else f"{abbr_b} receives fair value"
 
 
-# ── Main proposal generators ──────────────────────────────────────────────────
+# ── QB-targeted trade proposals ───────────────────────────────────────────────
 
-def generate_trade_proposals(season_id, games, standings, week, gm_settings=None):
+def _generate_qb_proposals(season_id, games, standings, week, gm_settings,
+                            seen_pairs, roster, player_stats=None, needs_map=None):
+    proposals     = []
+    seen_pairs_qb = set()
+
+    # ── Debug: show QB market ─────────────────────────────────────────────────
+    print("\n  [QB DEBUG] Scoring all teams...")
+    sample_team = config.TEAM_IDS[0] if config.TEAM_IDS else None
+    if sample_team and standings:
+        print(f"  [QB DEBUG] Sample standings record for {sample_team}: {standings.get(sample_team, 'NOT FOUND')}")
+
+    need_teams  = []
+    avail_teams = []
+    for tid in config.TEAM_IDS:
+        custom_n, nr = qb_need_score(tid, roster, standings, player_stats)
+        eval_n = 0.0
+        if needs_map and tid in needs_map:
+            eval_n = needs_map[tid].get("needs", {}).get("QB", 0.0)
+        combined_n = max(custom_n, eval_n * 0.9)
+        a, qb, ar = qb_availability_score(tid, roster, standings, gm_settings, player_stats)
+        abbr = config.ABBR.get(tid, tid.upper())
+        if combined_n >= QB_NEED_MIN:
+            need_teams.append((abbr, combined_n, nr or f"evaluator QB need {eval_n:.2f}"))
+        if a >= QB_AVAIL_MIN and qb:
+            avail_teams.append((abbr, a, qb.get('name'), qb.get('overall'), ar))
+
+    print(f"  [QB DEBUG] Need teams ({len(need_teams)}):")
+    for abbr, score, reason in sorted(need_teams, key=lambda x: -x[1]):
+        print(f"    {abbr}: {score:.3f} — {reason}")
+    print(f"  [QB DEBUG] Avail teams ({len(avail_teams)}):")
+    for abbr, score, name, ovr, reason in sorted(avail_teams, key=lambda x: -x[1]):
+        print(f"    {abbr}: {score:.3f} — {name} OVR {ovr} — {reason}")
+    # ─────────────────────────────────────────────────────────────────────────
+
+    for team_a in config.TEAM_IDS:
+        custom_need, need_reason = qb_need_score(team_a, roster, standings, player_stats)
+        eval_need = 0.0
+        if needs_map and team_a in needs_map:
+            eval_need = needs_map[team_a].get("needs", {}).get("QB", 0.0)
+        need = max(custom_need, eval_need * 0.9)
+        if not need_reason and eval_need > 0:
+            need_reason = f"QB group rated below league average (evaluator need {eval_need:.2f})"
+        if need < QB_NEED_MIN:
+            continue
+
+        for team_b in config.TEAM_IDS:
+            if team_a == team_b:
+                continue
+
+            pair = tuple(sorted([team_a, team_b]))
+            if pair in seen_pairs_qb:
+                continue
+
+            if not will_trade(team_a, team_b, games):
+                continue
+
+            avail, qb, avail_reason = qb_availability_score(
+                team_b, roster, standings, gm_settings, player_stats
+            )
+            if avail < QB_AVAIL_MIN or not qb:
+                continue
+
+            if not _is_meaningful_acquisition(qb, team_a, roster):
+                abbr_a = config.ABBR.get(team_a, team_a)
+                abbr_b = config.ABBR.get(team_b, team_b)
+                print(f"  [QB DEBUG] {abbr_a}←{abbr_b} {qb.get('name')} rejected: not meaningful acquisition")
+                continue
+
+            target_value = player_value(qb, standings, team_b)
+            qb_ovr       = qb.get("overall") or 70
+            is_blockbuster = qb_ovr >= QB_BLOCKBUSTER_OVR
+
+            salary = (qb.get("contract") or {}).get("annual_salary")
+            if not can_absorb_contract(season_id, team_a, salary):
+                abbr_a = config.ABBR.get(team_a, team_a)
+                abbr_b = config.ABBR.get(team_b, team_b)
+                print(f"  [QB DEBUG] {abbr_a}←{abbr_b} {qb.get('name')} rejected: cap (salary={salary})")
+                continue
+
+            return_pkg = _build_return_package(
+                team_a, team_b, target_value, season_id, standings,
+                gm_settings, roster, blockbuster=is_blockbuster
+            )
+            if not return_pkg:
+                abbr_a = config.ABBR.get(team_a, team_a)
+                abbr_b = config.ABBR.get(team_b, team_b)
+                print(f"  [QB DEBUG] {abbr_a}←{abbr_b} {qb.get('name')} OVR {qb_ovr} val={target_value:.0f}: no return package found")
+                continue
+
+            abbr_a = config.ABBR.get(team_a, team_a.upper())
+            abbr_b = config.ABBR.get(team_b, team_b.upper())
+
+            proposals.append({
+                "type":            "qb_targeted_trade",
+                "week":            week,
+                "season":          season_id,
+                "team_a":          team_a,
+                "team_b":          team_b,
+                "blockbuster":     return_pkg.get("blockbuster", False) or is_blockbuster,
+                "team_a_receives": {
+                    "players":        [qb.get("player_id")],
+                    "player_names":   [qb.get("name")],
+                    "player_details": [_player_summary(qb)],
+                    "player_fit":     [_analyze_fit(qb, team_a, roster)],
+                    "picks":          [],
+                    "value":          target_value,
+                },
+                "team_b_receives": return_pkg,
+                "need_score":      need,
+                "avail_score":     avail,
+                "position_group":  "QB",
+                "rationale_a":     f"{abbr_a} pursues QB upgrade — {need_reason}",
+                "rationale_b":     _build_rationale_b(
+                    team_b, return_pkg, season_id, standings, roster
+                ),
+                "rationale": (
+                    f"{'🏆 BLOCKBUSTER: ' if is_blockbuster else ''}"
+                    f"{abbr_a} targets {qb.get('name')} "
+                    f"(QB, OVR {qb_ovr}) — {avail_reason}"
+                ),
+            })
+
+            seen_pairs_qb.add(pair)
+
+    return proposals
+
+
+# ── Main proposal generator ───────────────────────────────────────────────────
+
+def generate_trade_proposals(season_id, games, standings, week, gm_settings=None,
+                              player_stats=None):
+    """
+    player_stats: optional dict {player_id: {stat_key: value}} for stat-aware
+                  QB logic. Pass in after weekly stats are implemented.
+    """
     if week > config.TRADE_DEADLINE_WEEK:
         return []
 
@@ -359,73 +824,87 @@ def generate_trade_proposals(season_id, games, standings, week, gm_settings=None
     needs_map  = {tid: assess_team_needs(tid, season_id, standings) for tid in config.TEAM_IDS}
     seen_pairs = set()
 
+    # ── General need-based trades (non-QB) ────────────────────────────────────
     for team_a in config.TEAM_IDS:
         a_needs = needs_map[team_a]
         if not a_needs["top_needs"]:
             continue
 
-        primary_group, primary_need = a_needs["top_needs"][0]
-        if primary_need < NEED_THRESHOLD_INITIATE:
-            continue
-
-        for team_b in config.TEAM_IDS:
-            if team_a == team_b:
+        for primary_group, primary_need in a_needs["top_needs"]:
+            # Lower bar: initiate if need > 0.20
+            if primary_need < 0.20:
                 continue
 
-            pair = tuple(sorted([team_a, team_b]))
-            if pair in seen_pairs:
+            # QB trades are handled by the dedicated QB engine below
+            if primary_group == "QB":
                 continue
 
-            if not will_trade(team_a, team_b, games):
-                continue
+            for team_b in config.TEAM_IDS:
+                if team_a == team_b:
+                    continue
 
-            b_available = get_available_players(team_b, season_id, primary_group, gm_settings)
-            if not b_available:
-                continue
+                # Allow each team to propose to multiple partners across position groups
 
-            target = b_available[0]
-            if not _is_meaningful_acquisition(target, team_a, roster):
-                continue
+                if not will_trade(team_a, team_b, games):
+                    continue
 
-            target_value = player_value(target, standings, team_b)
+                b_available = get_available_players(team_b, season_id, primary_group, gm_settings)
+                if not b_available:
+                    continue
 
-            salary = (target.get("contract") or {}).get("annual_salary")
-            if not can_absorb_contract(season_id, team_a, salary):
-                continue
+                target = b_available[0]
+                if not _is_meaningful_acquisition(target, team_a, roster):
+                    continue
 
-            return_pkg = _build_return_package(
-                team_a, team_b, target_value, season_id, standings, gm_settings, roster
-            )
-            if not return_pkg:
-                continue
+                target_value  = player_value(target, standings, team_b)
+                is_blockbuster = (target.get("overall") or 0) >= 87
 
-            proposals.append({
-                "type":       "player_trade",
-                "week":       week,
-                "season":     season_id,
-                "team_a":     team_a,
-                "team_b":     team_b,
-                "team_a_receives": {
-                    "players":        [target.get("player_id")],
-                    "player_names":   [target.get("name")],
-                    "player_details": [_player_summary(target)],
-                    "player_fit":     [_analyze_fit(target, team_a, roster)],
-                    "picks":          [],
-                    "value":          target_value,
-                },
-                "team_b_receives": return_pkg,
-                "need_score":      primary_need,
-                "position_group":  primary_group,
-                "rationale_a":     _build_rationale_a(team_a, primary_group, primary_need, target, roster),
-                "rationale_b":     _build_rationale_b(team_b, return_pkg, season_id, standings, roster),
-                "rationale":       (
-                    f"{config.ABBR.get(team_a)} targets "
-                    f"{target.get('name')} ({target.get('position')}, OVR {target.get('overall')})"
-                ),
-            })
+                salary = (target.get("contract") or {}).get("annual_salary")
+                if not can_absorb_contract(season_id, team_a, salary):
+                    continue
 
-            seen_pairs.add(pair)
+                return_pkg = _build_return_package(
+                    team_a, team_b, target_value, season_id, standings,
+                    gm_settings, roster, blockbuster=is_blockbuster
+                )
+                if not return_pkg:
+                    continue
 
+                proposals.append({
+                    "type":       "player_trade",
+                    "week":       week,
+                    "season":     season_id,
+                    "team_a":     team_a,
+                    "team_b":     team_b,
+                    "blockbuster": return_pkg.get("blockbuster", False) or is_blockbuster,
+                    "team_a_receives": {
+                        "players":        [target.get("player_id")],
+                        "player_names":   [target.get("name")],
+                        "player_details": [_player_summary(target)],
+                        "player_fit":     [_analyze_fit(target, team_a, roster)],
+                        "picks":          [],
+                        "value":          target_value,
+                    },
+                    "team_b_receives": return_pkg,
+                    "need_score":      primary_need,
+                    "position_group":  primary_group,
+                    "rationale_a":     _build_rationale_a(
+                        team_a, primary_group, primary_need, target, roster
+                    ),
+                    "rationale_b":     _build_rationale_b(
+                        team_b, return_pkg, season_id, standings, roster
+                    ),
+                    "rationale": (
+                        f"{config.ABBR.get(team_a)} targets "
+                        f"{target.get('name')} ({target.get('position')}, OVR {target.get('overall')})"
+                    ),
+                })
+    proposals.extend(_generate_qb_proposals(
+        season_id, games, standings, week, gm_settings, seen_pairs, roster,
+        player_stats, needs_map=needs_map
+    ))
+
+    # ── Pick-for-player (rebuilding teams) ────────────────────────────────────
     proposals.extend(_generate_pick_proposals(
         season_id, games, standings, week, gm_settings, seen_pairs, roster
     ))
@@ -433,7 +912,8 @@ def generate_trade_proposals(season_id, games, standings, week, gm_settings=None
     return proposals
 
 
-def _generate_pick_proposals(season_id, games, standings, week, gm_settings, seen_pairs=None, roster=None):
+def _generate_pick_proposals(season_id, games, standings, week, gm_settings,
+                              seen_pairs=None, roster=None):
     if seen_pairs is None:
         seen_pairs = set()
     if roster is None:
